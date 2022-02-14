@@ -1,23 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author klean
- */
 public class Suppliers {
     
-    ArrayList<Supplier> suppliers;
+    private ArrayList<Supplier> suppliers;
     
     public Suppliers(){
         this.suppliers = new ArrayList<Supplier>();
-        suppliers.add(new Supplier("Maruha Motors"));
+    }
+    
+    public void add(Supplier s){
+        if(!s.getName().isEmpty()){
+            this.suppliers.add(s);
+        }
+    }
+    
+    public void printSuppliers(){
+        int x = 0;
+        for(Supplier s : suppliers){
+            x++;
+            System.out.println(s.getName());
+        }
+        System.out.println(suppliers.size() + " Suppliers total");
+    }
+    
+    public boolean hasSupplier(String name){
+        for(Supplier s : suppliers){
+            if(s.getName().equals(name)) return true;
+        }
+        return false;
     }
     
 }

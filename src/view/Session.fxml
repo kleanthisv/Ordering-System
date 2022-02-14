@@ -7,10 +7,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
     
-    <Button text="Exit" onAction="#handleExit"></Button> 
-</AnchorPane>
+    <Button text="Print Suppliers" onAction="#handlePrintSupp"></Button>
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"> </Pane>
+        <TextField fx:id="supplierTf"></TextField>
+        <Pane prefWidth="5" > </Pane>
+        <Button text="Add Supplier" onAction="#handleAddSupplier"></Button>
+        <Pane HBox.hgrow="ALWAYS">  </Pane> 
+    </HBox>
+
+    
+    <Button text="Exit" onAction="#handleExit"></Button>
+</VBox>

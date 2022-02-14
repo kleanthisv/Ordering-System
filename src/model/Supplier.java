@@ -14,7 +14,11 @@ public class Supplier {
     private String name;
     
     public Supplier(String name){
-        this.name = name;
+        this.name = name.trim();
+    }
+    
+    public String getName(){
+        return this.name;
     }
     
 }

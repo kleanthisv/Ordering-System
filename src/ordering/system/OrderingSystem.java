@@ -20,8 +20,7 @@ public class OrderingSystem extends Application {
         
         stage.centerOnScreen();
         
-        Suppliers suppliers = new Suppliers();
-        ViewLoader.showStage(suppliers, "/view/Session.fxml", "MX5Mania Ordering System", stage);
+        ViewLoader.showStage(new Session(), "/view/Session.fxml", "MX5Mania Ordering System", stage);
         
     }
 }
