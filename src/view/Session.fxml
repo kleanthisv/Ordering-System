@@ -20,6 +20,8 @@
         <Button text="Add Supplier" onAction="#handleAddSupplier"></Button>
         <Pane HBox.hgrow="ALWAYS">  </Pane> 
     </HBox>
+    
+    <Button text="Import Report" onAction="#handleImportBtn" />
 
     
     <Button text="Exit" onAction="#handleExit"></Button>

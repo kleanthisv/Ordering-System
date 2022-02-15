@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImportController">
+    <stylesheets>
+        <URL value="@mx5.css"/>
+    </stylesheets>
+    
+    <GridPane >
+        <Button GridPane.columnIndex="0" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
+        <Button GridPane.columnIndex="0" GridPane.rowIndex="1"   text="Import Report" onAction="#handleImport" />   
+    </GridPane>  
+    
+</VBox>

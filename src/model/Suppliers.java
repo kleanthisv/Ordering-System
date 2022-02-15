@@ -16,6 +16,10 @@ public class Suppliers {
         }
     }
     
+    public ArrayList<Supplier> getSuppliers(){
+        return this.suppliers;
+    }
+    
     public void printSuppliers(){
         int x = 0;
         for(Supplier s : suppliers){

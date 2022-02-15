@@ -16,7 +16,7 @@ public class SessionController extends Controller<Session>{
    @FXML private TextField supplierTf;
    
    @FXML private void handleExit(ActionEvent event) throws Exception {
-       //model.updateSuppliers();
+       model.writeSuppliers();
        this.stage.close();
    }
    
@@ -33,5 +33,12 @@ public class SessionController extends Controller<Session>{
            System.out.println("Supplier " + supplierName + " added to supplier list.");
        }       
        supplierTf.setText("");
+   }
+   
+   @FXML private void handleImportBtn(ActionEvent event) throws Exception{
+       Stage importStage = new Stage();
+       importStage.setHeight(50);
+       importStage.setWidth(200);
+       ViewLoader.showStage(model, "/view/Import.fxml", "Import Sales Report", importStage);
    }
 }

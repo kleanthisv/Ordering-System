@@ -7,7 +7,11 @@ import java.util.logging.Logger;
 
 
 public class Session {
+    
     private Suppliers suppliers;
+    private String dataFolder = System.getenv("APPDATA");
+    private File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
+    private File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
     
     public Session(){
         this.suppliers = new Suppliers(); // read in Suppliers csv
@@ -26,18 +30,11 @@ public class Session {
         return this.suppliers.hasSupplier(name);
     }
     
-    private void updateSuppliers() throws Exception{
-        
-    }
-    
     private void importSuppliers() throws Exception{
-        String dataFolder = System.getenv("APPDATA");
         
-        File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
         if(appDataDir.mkdir()) System.out.println("AppData directory dreated");
         else System.out.println("AppData directory could not be created");
         
-        File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
         if(suppliersCSV.createNewFile()) System.out.println("Suppliers.csv Created");
         else System.out.println("Suppliers.csv already exists");
         
@@ -46,6 +43,17 @@ public class Session {
         while(sc.hasNext()){
             suppliers.add(new Supplier(sc.next()));
         }
+    }
+    
+    public void writeSuppliers() throws Exception{
+        FileWriter csvWriter;
+        csvWriter = new FileWriter(suppliersCSV,false);
+	for(Supplier s : suppliers.getSuppliers()) {
+            csvWriter.write(s.getName() + ",");
+	}
+        System.out.println("Suppliers CSV finished writing.");
+        csvWriter.flush();
+        csvWriter.close();
     }
     
 }
