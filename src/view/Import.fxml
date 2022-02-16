@@ -7,14 +7,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImportController">
+<VBox prefHeight="250.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImportController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
     
     <GridPane >
-        <Button GridPane.columnIndex="0" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
-        <Button GridPane.columnIndex="0" GridPane.rowIndex="1"   text="Import Report" onAction="#handleImport" />   
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="salesReportLbl" />  
+        <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
+        <Button GridPane.columnIndex="0" GridPane.rowIndex="2"   text="Import Report" onAction="#handleImportBtn" />
+        <Button GridPane.columnIndex="1" GridPane.rowIndex="2"   text="Close" onAction="#handleCloseBtn" />  
     </GridPane>  
     
 </VBox>

@@ -2,6 +2,11 @@
  * Empty Stylesheet file.
  */
 
+.label-h1{
+    -fx-font-size: 25pt;
+    -fx-font-weight: bold;
+}
+
 .mainFxmlClass {
 
 }

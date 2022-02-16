@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Scanner;  
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 
 
 public class Session {
@@ -48,7 +49,7 @@ public class Session {
     public void writeSuppliers() throws Exception{
         FileWriter csvWriter;
         csvWriter = new FileWriter(suppliersCSV,false);
-	for(Supplier s : suppliers.getSuppliers()) {
+	for(Supplier s : suppliers.getSuppliersAsArr()) {
             csvWriter.write(s.getName() + ",");
 	}
         System.out.println("Suppliers CSV finished writing.");

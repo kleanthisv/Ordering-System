@@ -1,13 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Suppliers {
     
-    private ArrayList<Supplier> suppliers;
+    private ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
     
     public Suppliers(){
-        this.suppliers = new ArrayList<Supplier>();
     }
     
     public void add(Supplier s){
@@ -16,8 +17,16 @@ public class Suppliers {
         }
     }
     
-    public ArrayList<Supplier> getSuppliers(){
+    public final ObservableList<Supplier> getSuppliers(){
         return this.suppliers;
+    }
+    
+    public ArrayList<Supplier> getSuppliersAsArr(){
+        ArrayList<Supplier> suppliersAL = new ArrayList();
+        for(Supplier s : this.suppliers){
+            suppliersAL.add(s);
+        }
+        return suppliersAL;
     }
     
     public void printSuppliers(){

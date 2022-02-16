@@ -4,6 +4,7 @@ import au.edu.uts.ap.javafx.Controller;
 import au.edu.uts.ap.javafx.ViewLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.*;
@@ -14,6 +15,11 @@ public class SessionController extends Controller<Session>{
    public final Session getSession() { return model; }
     
    @FXML private TextField supplierTf;
+   @FXML private ListView suppliersLv;
+   
+   @FXML private void initialize(){
+       suppliersLv.setItems(model.getSuppliers().getSuppliers());
+   }
    
    @FXML private void handleExit(ActionEvent event) throws Exception {
        model.writeSuppliers();
@@ -31,11 +37,11 @@ public class SessionController extends Controller<Session>{
        if(!model.supplierExists(supplierName) && !supplierName.isEmpty()){
            model.getSuppliers().add(new Supplier(supplierName));
            System.out.println("Supplier " + supplierName + " added to supplier list.");
-       }       
+       }
        supplierTf.setText("");
    }
    
-   @FXML private void handleImportBtn(ActionEvent event) throws Exception{
+   @FXML private void handleImportSalesReportBtn(ActionEvent event) throws Exception{
        Stage importStage = new Stage();
        importStage.setHeight(50);
        importStage.setWidth(200);

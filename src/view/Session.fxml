@@ -7,22 +7,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox prefHeight="500.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
     
-    <Button text="Print Suppliers" onAction="#handlePrintSupp"></Button>
     <HBox >
-        <Pane HBox.hgrow="ALWAYS"> </Pane>
-        <TextField fx:id="supplierTf"></TextField>
-        <Pane prefWidth="5" > </Pane>
-        <Button text="Add Supplier" onAction="#handleAddSupplier"></Button>
-        <Pane HBox.hgrow="ALWAYS">  </Pane> 
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h1" text="MX5 Mania Ordering System" />
+        <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
-    <Button text="Import Report" onAction="#handleImportBtn" />
-
+    <ListView fx:id="suppliersLv">
+        <placeholder> <Label text="No Supplier"/> </placeholder>
+    </ListView>
     
-    <Button text="Exit" onAction="#handleExit"></Button>
+    <Pane VBox.vgrow="ALWAYS"/>
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Import Report" onAction="#handleImportSalesReportBtn" />
+        <Pane prefWidth="20"/>
+        <Button text="Button 2" />
+        <Pane prefWidth="20"/>
+        <Button text="Button 3" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+         
+    <Pane prefHeight="30" /> 
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" />  
+        <Button text="Save and Exit" onAction="#handleExit"></Button>
+        <Pane prefWidth="50"/> 
+    </HBox>
+    
+    <Pane prefHeight="20" /> 
+    
 </VBox>

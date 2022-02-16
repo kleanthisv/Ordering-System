@@ -5,20 +5,26 @@
  */
 package model;
 
+import javafx.beans.property.*;
+
 /**
  *
  * @author klean
  */
 public class Supplier {
     
-    private String name;
+    private StringProperty name;
     
     public Supplier(String name){
-        this.name = name.trim();
+        this.name.set(name.trim());
+    }
+    
+    public ReadOnlyStringProperty nameProperty(){
+        return this.name;
     }
     
     public String getName(){
-        return this.name;
+        return this.name.get();
     }
     
 }
