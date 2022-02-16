@@ -15,16 +15,16 @@ public class Session {
     private File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
     
     public Session(){
-        this.suppliers = new Suppliers(); // read in Suppliers csv
+        this.suppliers = new Suppliers();
         try {
             importSuppliers();
         } catch (Exception ex) {
-            System.out.println("suppliers.csv not found");
+            System.out.println("Error importing suppliers.");
         }
     }
     
-    public Suppliers getSuppliers(){
-        return this.suppliers;
+    public ObservableList<Supplier> getSuppliers(){
+        return this.suppliers.getSuppliers();
     }
     
     public boolean supplierExists(String name){

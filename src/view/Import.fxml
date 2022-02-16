@@ -12,11 +12,43 @@
         <URL value="@mx5.css"/>
     </stylesheets>
     
-    <GridPane >
-        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="salesReportLbl" />  
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h2" text="Sales Report Selection" underline="true" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+    
+    <Pane prefHeight="50" /> 
+    
+    
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" minWidth="50"  />
+        <GridPane >
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Current Selection:" styleClass="label-bold" />
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="salesReportLbl" /> 
+        </GridPane>
+        <Pane HBox.hgrow="ALWAYS" minWidth="50"  />   
+    </HBox>
+    
+    <Pane VBox.vgrow="ALWAYS"/> 
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
         <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
-        <Button GridPane.columnIndex="0" GridPane.rowIndex="2"   text="Import Report" onAction="#handleImportBtn" />
-        <Button GridPane.columnIndex="1" GridPane.rowIndex="2"   text="Close" onAction="#handleCloseBtn" />  
-    </GridPane>  
+        <Pane prefWidth="20" />
+        <Button text="Import Selected Report" onAction="#handleImportBtn" />
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <Pane prefHeight="10" />
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Close" onAction="#handleCloseBtn" />
+        <Pane minWidth="20" /> 
+    </HBox>
+    
+    <Pane minHeight="20"  />        
     
 </VBox>

@@ -6,8 +6,9 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
-<VBox prefHeight="500.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox prefHeight="600" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
@@ -18,11 +19,26 @@
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
-    <ListView fx:id="suppliersLv">
-        <placeholder> <Label text="No Supplier"/> </placeholder>
-    </ListView>
+    <Pane prefHeight="50" />
     
-    <Pane VBox.vgrow="ALWAYS"/>
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h2" text="Suppliers List:" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+    
+    <HBox >
+        <Pane prefWidth="200" /> 
+        <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" >
+            <placeholder> <Label text="No Supplier"/> </placeholder>
+        </ListView>
+        <Pane prefWidth="200" />
+    </HBox>
+    
+    
+    <Pane prefHeight="60" />
+    
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
@@ -34,7 +50,7 @@
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
          
-    <Pane prefHeight="30" /> 
+    <Pane minHeight="20" /> 
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS" />  
@@ -42,6 +58,6 @@
         <Pane prefWidth="50"/> 
     </HBox>
     
-    <Pane prefHeight="20" /> 
+    <Pane minHeight="20"  /> 
     
 </VBox>
