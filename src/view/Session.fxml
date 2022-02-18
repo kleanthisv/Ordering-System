@@ -29,7 +29,14 @@
     </HBox>
     
     <HBox >
-        <Pane prefWidth="200" /> 
+        <Pane HBox.hgrow="ALWAYS"  />
+        <VBox >
+            <Button text="Import Report" onAction="#handleImportSalesReportBtn" />
+            <Pane prefHeight="10" /> 
+            <Label styleClass="label-bold" text="Last import date:"/>
+            <Label fx:id="reportDateLbl"  text="date"/>
+        </VBox>
+        <Pane prefWidth="75"   /> 
         <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" >
             <placeholder> <Label text="No Supplier"/> </placeholder>
         </ListView>
@@ -42,9 +49,7 @@
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Import Report" onAction="#handleImportSalesReportBtn" />
-        <Pane prefWidth="20"/>
-        <Button text="Button 2" />
+        <Button text="Open Order" />
         <Pane prefWidth="20"/>
         <Button text="Button 3" />
         <Pane HBox.hgrow="ALWAYS" /> 

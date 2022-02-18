@@ -16,6 +16,10 @@
     -fx-font-weight: bold;
 }
 
+.label-error{
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
 
 .mainFxmlClass {
 

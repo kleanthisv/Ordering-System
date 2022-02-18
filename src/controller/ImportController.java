@@ -36,8 +36,26 @@ public class ImportController extends Controller<Session>{
    
    @FXML
    private void handleImportBtn(ActionEvent event) throws Exception{
-       //do stuff to split it into suppliers
-   }
+       
+       try{
+            String fileName = selectedFile.getName();
+            if(fileName.contains("sales_")){
+                model.setSalesReport(selectedFile);
+            }
+            else{
+                Stage errorStage = new Stage();
+                errorStage.setHeight(100);
+                errorStage.setWidth(200);
+                ViewLoader.showStage(new OSError("Selected file is not a sales report"), "/view/Error.fxml", "ERROR", errorStage);
+            }
+        }
+        catch(NullPointerException e){
+            Stage errorStage = new Stage();
+            errorStage.setHeight(100);
+            errorStage.setWidth(200);
+            ViewLoader.showStage(new OSError("No file selected"), "/view/Error.fxml", "ERROR", errorStage);
+        }
+    }
    
    @FXML
    private void handleCloseBtn(ActionEvent event){

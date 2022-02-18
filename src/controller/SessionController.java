@@ -5,6 +5,7 @@ import au.edu.uts.ap.javafx.ViewLoader;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.*;
@@ -19,8 +20,10 @@ public class SessionController extends Controller<Session>{
     
    @FXML private TextField supplierTf;
    @FXML private ListView suppliersLv;
+   @FXML private Label reportDateLbl;
    
    @FXML private void initialize(){
+       reportDateLbl.textProperty().bind(model.getReportDate());
    }
    
    @FXML private void handleExit(ActionEvent event) throws Exception {

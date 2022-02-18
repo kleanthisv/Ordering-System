@@ -2,8 +2,7 @@ package model;
 
 import java.io.*;  
 import java.util.Scanner;  
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
 
@@ -11,8 +10,12 @@ public class Session {
     
     private Suppliers suppliers;
     private String dataFolder = System.getenv("APPDATA");
+    private StringProperty salesReportDate = new SimpleStringProperty() ;
+    
     private File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
     private File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
+    private File dateFile = new File(appDataDir + "\\Date.txt");
+    private File salesReportCSV;
     
     public Session(){
         this.suppliers = new Suppliers();
@@ -39,11 +42,19 @@ public class Session {
         if(suppliersCSV.createNewFile()) System.out.println("Suppliers.csv Created");
         else System.out.println("Suppliers.csv already exists");
         
-        Scanner sc = new Scanner(suppliersCSV);
-        sc.useDelimiter(",");
-        while(sc.hasNext()){
-            suppliers.add(new Supplier(sc.next()));
+        if(dateFile.createNewFile()) System.out.println("ImportDate.txt Created");
+        else System.out.println("ImportDate.txt already exists");
+        
+        Scanner supplierSc = new Scanner(suppliersCSV);
+        supplierSc.useDelimiter(",");
+        while(supplierSc.hasNext()){
+            suppliers.add(new Supplier(supplierSc.next()));
         }
+        supplierSc.close();
+        
+        Scanner dateSc = new Scanner(dateFile);
+        this.salesReportDate.set(dateSc.next());
+        dateSc.close();
     }
     
     public void writeSuppliers() throws Exception{
@@ -55,6 +66,20 @@ public class Session {
         System.out.println("Suppliers CSV finished writing.");
         csvWriter.flush();
         csvWriter.close();
+        
+        FileWriter dateWriter;
+        dateWriter = new FileWriter(dateFile,false);
+        dateWriter.write(salesReportDate.getValue());
+        dateWriter.flush();
+        dateWriter.close();
     }
     
+    public void setSalesReport(File f){
+        this.salesReportCSV = f;
+        this.salesReportDate.set(salesReportCSV.getName().substring(6,salesReportCSV.getName().length()-4));
+    }
+    
+    public StringProperty getReportDate(){
+        return this.salesReportDate;
+    }
 }
