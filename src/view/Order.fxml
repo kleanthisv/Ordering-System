@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" fx:controller="controller.OrderController">
+    <stylesheets>
+        <URL value="@mx5.css"/>
+    </stylesheets>
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <TableView fx:id="productTv" /> 
+        <Pane prefWidth="50" /> 
+    </HBox>
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Close" onAction="#handleCloseBtn"/>  
+        <Pane prefWidth="50" /> 
+    </HBox>
+    
+    <Pane prefHeight="20" /> 
+</VBox>
