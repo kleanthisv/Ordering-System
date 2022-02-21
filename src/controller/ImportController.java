@@ -26,11 +26,19 @@ public class ImportController extends Controller<Session>{
    }
    
    @FXML
-   private void handleSelectBtn(ActionEvent event) throws Exception{
-       FileChooser fileChooser = new FileChooser();
-       fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV","*.csv"));
-       selectedFile = fileChooser.showOpenDialog(new Stage());
-       salesReportLbl.setText(selectedFile.getName());
+   private void handleSelectBtn(ActionEvent event){
+       try{
+           FileChooser fileChooser = new FileChooser();
+           fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV","*.csv"));
+           File tempFile = fileChooser.showOpenDialog(new Stage());
+           if(tempFile.isFile()){
+               selectedFile = tempFile;
+               salesReportLbl.setText(selectedFile.getName());
+            }
+       }
+       catch(Exception e){
+           System.out.println("No file chosen.");
+       }
    }
    
    @FXML
@@ -38,7 +46,7 @@ public class ImportController extends Controller<Session>{
        
        try{
             String fileName = selectedFile.getName();
-            if(fileName.contains("sales_")){
+            if(fileName.matches("sales_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv")){
                 model.setSalesReport(selectedFile);
             }
             else{

@@ -52,9 +52,14 @@ public class SessionController extends Controller<Session>{
    }
    
    @FXML private void handleOpenOrderBtn(ActionEvent event) throws Exception{
+       Supplier s = getSelectedSupplier();
        Stage orderStage = new Stage();
        orderStage.setHeight(50);
        orderStage.setWidth(200);
-       ViewLoader.showStage(, "/view/Order.fxml", "Order", orderStage);
+       ViewLoader.showStage(s, "/view/Order.fxml", s.getName() + " Order", orderStage);
+   }
+   
+   private Supplier getSelectedSupplier(){
+       return (Supplier) suppliersLv.getSelectionModel().getSelectedItem();
    }
 }

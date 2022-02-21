@@ -6,17 +6,33 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" fx:controller="controller.OrderController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="750.0" fx:controller="controller.OrderController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <TableView fx:id="productTv" /> 
-        <Pane prefWidth="50" /> 
+        <Label fx:id="titleLbl" styleClass="label-h2"/>
+        <Pane HBox.hgrow="ALWAYS"  /> 
     </HBox>
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <TableView prefWidth="600" fx:id="productTv" items="${controller.list}">
+            <placeholder> <Label text="No products in order" /> </placeholder>
+            <columns>
+                <TableColumn text="Name" > 
+                    <cellFactory><PropertyValueFactory property="title"/> </cellFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <Pane HBox.hgrow="ALWAYS"  /> 
+    </HBox>
+    
+    <Pane VBox.vgrow="ALWAYS"/> 
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>

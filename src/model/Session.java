@@ -22,6 +22,8 @@ public class Session {
         try {
             importSuppliers();
         } catch (Exception ex) {
+            System.out.println(ex.toString());
+            ex.printStackTrace();
             System.out.println("Error importing suppliers.");
         }
     }
@@ -36,14 +38,33 @@ public class Session {
     
     private void importSuppliers() throws Exception{
         
-        if(appDataDir.mkdir()) System.out.println("AppData directory dreated");
-        else System.out.println("AppData directory could not be created");
+        try{
+            if(appDataDir.mkdir()) System.out.println("AppData directory dreated");
+            else System.out.println("AppData directory already exists");
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            System.out.println("Error with AppData directory");
+        }
         
-        if(suppliersCSV.createNewFile()) System.out.println("Suppliers.csv Created");
-        else System.out.println("Suppliers.csv already exists");
+        try{
+            if(suppliersCSV.createNewFile()) System.out.println("Suppliers.csv Created");
+            else System.out.println("Suppliers.csv already exists");
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            System.out.println("Error with Suppliers.csv");
+        }
         
-        if(dateFile.createNewFile()) System.out.println("ImportDate.txt Created");
-        else System.out.println("ImportDate.txt already exists");
+        try{
+            if(dateFile.createNewFile()) System.out.println("ImportDate.txt Created");
+            else System.out.println("ImportDate.txt already exists");
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            System.out.println("Error with ImportDate.txt");
+        }
+        
         
         Scanner supplierSc = new Scanner(suppliersCSV);
         supplierSc.useDelimiter(",");
@@ -53,7 +74,9 @@ public class Session {
         supplierSc.close();
         
         Scanner dateSc = new Scanner(dateFile);
-        this.salesReportDate.set(dateSc.next());
+        if(dateSc.hasNext()){
+            this.salesReportDate.set(dateSc.next());
+        }
         dateSc.close();
     }
     
@@ -61,17 +84,20 @@ public class Session {
         FileWriter csvWriter;
         csvWriter = new FileWriter(suppliersCSV,false);
 	for(Supplier s : suppliers.getSuppliersAsArr()) {
-            csvWriter.write(s.getName() + ",");
+            csvWriter.write(s.toString() + ",");
 	}
         System.out.println("Suppliers CSV finished writing.");
         csvWriter.flush();
         csvWriter.close();
         
-        FileWriter dateWriter;
-        dateWriter = new FileWriter(dateFile,false);
-        dateWriter.write(salesReportDate.getValue());
-        dateWriter.flush();
-        dateWriter.close();
+        if(!salesReportDate.getValueSafe().isEmpty()){
+            FileWriter dateWriter;
+            dateWriter = new FileWriter(dateFile,false);
+            dateWriter.write(salesReportDate.getValue());
+            dateWriter.flush();
+            dateWriter.close();
+        }
+        
     }
     
     public void setSalesReport(File f){

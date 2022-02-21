@@ -16,15 +16,15 @@ import model.*;
 
 public class OrderController extends Controller<Supplier>{
    public final Supplier getSupplier() { return model; }
+   public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
    @FXML TableView<Product> productTv = new TableView<Product>();
-   ObservableList<Product> productList = model.getOrder().getList();
+   @FXML Label titleLbl;
+//   ObservableList<Product> productList = model.getOrder().getList();
            
    @FXML
    private void initialize(){
-       productTv.setItems(productList);
-       TableColumn<Product,String> titleCol = new TableColumn<Product,String>("Product");
-       titleCol.setCellValueFactory(new PropertyValueFactory("title"));
+       titleLbl.setText(model.getName() + " Order");
        //initialize table view.
        //if product is backorder, change css so it is highlighted yellow or something
    }
