@@ -12,6 +12,11 @@ public class Supplier {
         this.name = new SimpleStringProperty();
         this.name.set(name.trim());
         this.order = new Order();
+        order.addProduct(new Product("Name", "sku", 2));
+    }
+    
+    public void writeOrder() throws Exception{
+        //write order to csv
     }
     
     public Order getOrder(){

@@ -5,6 +5,7 @@
 package model;
 
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 
 /**
  *
@@ -18,10 +19,8 @@ public class Product {
     private StringProperty title;
     private BooleanProperty isBackorder;
     
-    public Product(String title, String SKU, Supplier supplier, int qty){
-        // if product exists in supplier.getOrder, then add the qty to the order instead of the whole product.
-        this.supplier = supplier;
-        
+    public Product(String title, String SKU, int qty){
+        // if product exists in supplier.getOrder, then add the qty to the order instead of the whole product.        
         this.SKU = new SimpleStringProperty();
         this.SKU.set(SKU);
         
@@ -35,8 +34,8 @@ public class Product {
         this.isBackorder.set(false);
     }
     
-    public ReadOnlyIntegerProperty quantityProperty(){
-        return this.quantity;
+    public ObservableValue<Integer> quantityProperty(){
+        return this.quantity.asObject();
     }
     
     public ReadOnlyStringProperty titleProperty(){

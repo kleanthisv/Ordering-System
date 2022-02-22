@@ -24,20 +24,47 @@
         <TableView prefWidth="600" fx:id="productTv" items="${controller.list}">
             <placeholder> <Label text="No products in order" /> </placeholder>
             <columns>
-                <TableColumn text="Name" > 
-                    <cellFactory><PropertyValueFactory property="title"/> </cellFactory>
-                </TableColumn>
+                <TableColumn text="Export?" prefWidth="50"/>
+                <TableColumn fx:id="nameClm" text="Name" prefWidth="250"/> 
+                <TableColumn fx:id="skuClm" text="SKU" prefWidth="200"/> 
+                <TableColumn fx:id="qtyClm" text="Quantity" prefWidth="100"/> 
             </columns>
         </TableView>
         <Pane HBox.hgrow="ALWAYS"  /> 
     </HBox>
     
+    <Pane prefHeight="10" /> 
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button fx:id="makeBackorderBtn" text="Make Backorder" disable="true" onAction="#handleMakeBackorderBtn"/>  
+        <Pane prefWidth="20" />
+        <Button text="Add Product" onAction="#handleAddProdBtn"/> 
+        <Pane prefWidth="20" />
+        <Button fx:id="adjustQtyBtn" text="Adjust Quantity" disable="true" onAction="#handleAdjustQtyBtn"/> 
+        <Pane prefWidth="20" />
+        <Button fx:id="deleteProdBtn" text="Delete Product" disable="true" onAction="#handleDeleteProdBtn"/> 
+        <Pane HBox.hgrow="ALWAYS"  />   
+    </HBox>
+    
+    <Pane prefHeight="20" />
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Export Selected" onAction="#handleExportSelectedBtn"/>  
+        <Pane prefWidth="20" />
+        <Button text="Export All" onAction="#handleExportAllBtn"/> 
+        <Pane HBox.hgrow="ALWAYS"  />   
+    </HBox>     
+    
     <Pane VBox.vgrow="ALWAYS"/> 
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Close" onAction="#handleCloseBtn"/>  
-        <Pane prefWidth="50" /> 
+        <Button text="Exit" onAction="#handleCloseBtn"/>  
+        <Pane prefWidth="20" />
+        <Button text="Save and Exit" onAction="#handleSaveExitBtn"/> 
+        <Pane prefWidth="50" />  
     </HBox>
     
     <Pane prefHeight="20" /> 

@@ -20,13 +20,54 @@ public class OrderController extends Controller<Supplier>{
    
    @FXML TableView<Product> productTv = new TableView<Product>();
    @FXML Label titleLbl;
-//   ObservableList<Product> productList = model.getOrder().getList();
+   
+   @FXML TableColumn<Product, String> nameClm;
+   @FXML TableColumn<Product, String> skuClm;
+   @FXML TableColumn<Product, Integer> qtyClm;
+   
+   @FXML Button makeBackorderBtn;
+   @FXML Button adjustQtyBtn;
+   @FXML Button deleteProdBtn;
+   
            
    @FXML
    private void initialize(){
        titleLbl.setText(model.getName() + " Order");
+       
+       productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> 
+               makeBackorderBtn.setDisable(newProd == null)
+       
+       );
+       
+       nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+       skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
+       qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
        //initialize table view.
        //if product is backorder, change css so it is highlighted yellow or something
+   }
+   
+   @FXML void handleAddProdBtn(ActionEvent event){
+       
+   }
+   
+   @FXML void handleDeleteProdBtn(ActionEvent event){
+       
+   }
+   
+   @FXML void handleAdjustQtyBtn(ActionEvent event){
+       
+   }
+   
+   @FXML void handleMakeBackorderBtn(ActionEvent event){
+       
+   }
+   
+   @FXML void handleExportSelectedBtn(){
+       
+   }
+   
+   @FXML void handleExportAllBtn(){
+       
    }
    
    @FXML
@@ -35,7 +76,14 @@ public class OrderController extends Controller<Supplier>{
    }
    
    @FXML
-   private void handleSaveExitBtn(ActionEvent event) throws Exception{
-       //rewrite order file and close window
+   private void handleSaveExitBtn(ActionEvent event){
+       try{
+           model.writeOrder();
+           stage.close();
+       }
+       catch(Exception e){
+           System.out.println(e.toString());
+           System.out.println("Error writing order.");
+       }
    }
 }

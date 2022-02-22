@@ -15,13 +15,13 @@ public class Order {
     
     public void addAllProducts(ArrayList<Product> products){
         for(Product s : products){
-            this.addProduct(s,1); //CHANGE TO MAKE IT SO QUANTITY IS A DIFFERENT VALUE WHEN RECEIVED AS TO WHEN IT IS STORED
+            this.addProduct(s); //CHANGE TO MAKE IT SO QUANTITY IS A DIFFERENT VALUE WHEN RECEIVED AS TO WHEN IT IS STORED
         }
     }
     
-    public void addProduct(Product product, int Quantity){
+    public void addProduct(Product product){
         if(productExists(product)){
-            product.orderMore(Quantity);
+            product.orderMore(1);
         }
         else productList.add(product);
     }

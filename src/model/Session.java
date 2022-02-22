@@ -12,9 +12,10 @@ public class Session {
     private String dataFolder = System.getenv("APPDATA");
     private StringProperty salesReportDate = new SimpleStringProperty() ;
     
-    private File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
-    private File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
-    private File dateFile = new File(appDataDir + "\\Date.txt");
+    public final File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
+    public final File ordersDir = new File(appDataDir + "\\Orders");
+    public final File suppliersCSV = new File(appDataDir + "\\Suppliers.csv");
+    public final File dateFile = new File(appDataDir + "\\Date.txt");
     private File salesReportCSV;
     
     public Session(){
@@ -45,6 +46,15 @@ public class Session {
         catch(Exception e){
             System.out.println(e.toString());
             System.out.println("Error with AppData directory");
+        }
+        
+        try{
+            if(ordersDir.mkdir()) System.out.println("Orders directory dreated");
+            else System.out.println("Orders directory already exists");
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            System.out.println("Error with Orders directory");
         }
         
         try{

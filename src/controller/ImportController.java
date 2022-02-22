@@ -63,7 +63,7 @@ public class ImportController extends Controller<Session>{
             ViewLoader.showStage(new OSError("No file selected"), "/view/Error.fxml", "ERROR", errorStage);
         }
     }
-   
+      
    @FXML
    private void handleCloseBtn(ActionEvent event){
        stage.close();

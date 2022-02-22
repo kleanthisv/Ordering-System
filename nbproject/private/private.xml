@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/view/Session.fxml</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/view/Import.fxml</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/model/Supplier.java</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/controller/SessionController.java</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/ordering/system/OrderingSystem.java</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/model/Suppliers.java</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/view/mx5.css</file>
-            <file>file:/F:/Uni/Apps%20Prog/Java%20Projects/Ordering%20System/src/model/Session.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/OrderController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/SessionController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Order.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Supplier.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/ordering/system/OrderingSystem.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Session.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Order.fxml</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Session.fxml</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Product.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Suppliers.java</file>
         </group>
     </open-files>
 </project-private>
