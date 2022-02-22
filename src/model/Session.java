@@ -124,18 +124,28 @@ public class Session {
         
         for(String s : lines){ //split line into product and add to list
             if(!s.equals("product_title,product_vendor,variant_sku,net_quantity")){
-                String[] productArr = s.split(","); //0=title 1=supplier 2=sku 3=quantity
-                
-                if(!suppliers.hasSupplier(productArr[1])){
-                    suppliers.add(new Supplier(productArr[1]));
+                if(s.replaceAll("[^,]","").length() == 3){
+                    String[] productArr = s.split(","); //0=title 1=supplier 2=sku 3=quantity
+                    productArr[1] = productArr[1].trim();
+                    
+                    if(!suppliers.hasSupplier(productArr[1])){
+                        suppliers.add(new Supplier(productArr[1]));
+                    }
+                    else if(productArr[1].isEmpty() && !suppliers.hasSupplier("No Supplier")){
+                        suppliers.add(new Supplier("No Supplier"));
+                    }
+                    if(!productArr[2].isEmpty() && suppliers.hasSupplier(productArr[1])){
+                        try{
+                            suppliers.getSupplier(productArr[1]).getOrder().addProduct(new Product(productArr[0],productArr[2],Integer.parseInt(productArr[3])));
+                        }
+                        catch(Exception e){
+                            System.out.println(e.toString() +" when trying to import: " + s);
+                        }
+                    }
                 }
-                if(!productArr[2].isEmpty() && suppliers.hasSupplier(productArr[1])){
-                    try{
-                        suppliers.getSupplier(productArr[1]).getOrder().addProduct(new Product(productArr[0],productArr[2],Integer.parseInt(productArr[3])));
-                    }
-                    catch(Exception e){
-                        System.out.println(e.toString() +" when trying to import: " + s);
-                    }
+                else{
+                    System.out.println("Line " + s + " includes a comma.");
+                    throw new Exception("Line included comma");
                 }
             }
         }

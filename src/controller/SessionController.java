@@ -29,7 +29,7 @@ public class SessionController extends Controller<Session>{
    }
    
    @FXML private void handleExit(ActionEvent event) throws Exception {
-       //model.writeSuppliers();
+       model.writeSuppliers();
        this.stage.close();
    }
      

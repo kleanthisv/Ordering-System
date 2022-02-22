@@ -12,10 +12,7 @@ public class Suppliers {
     }
     
     public void add(Supplier s){
-        if(s.getName().isEmpty()){
-            suppliers.add(new Supplier("No Supplier"));
-        }
-        else suppliers.add(s);
+        suppliers.add(s);
     }
     
     public final ObservableList<Supplier> getSuppliers(){
@@ -47,16 +44,8 @@ public class Suppliers {
     }
     
     public boolean hasSupplier(String sName){
-        if(sName.isEmpty()){
-            sName = "No Supplier";
-            for(Supplier s : suppliers){
-                if(s.getName().matches(sName));
-            }
-        }
-        else{
-            for(Supplier s : suppliers){
-                if(s.getName().matches(sName)) return true;
-            }
+        for(Supplier s : suppliers){
+            if(s.getName().matches(sName)) return true;
         }
         return false;
     }
