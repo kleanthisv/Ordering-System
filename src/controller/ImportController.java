@@ -46,8 +46,9 @@ public class ImportController extends Controller<Session>{
        
        try{
             String fileName = selectedFile.getName();
-            if(fileName.matches("sales_[0-9]{4}-[0-9]{2}-[0-9]{2}.csv")){
+            if(fileName.contains("sales_")){
                 model.setSalesReport(selectedFile);
+                model.importSalesReport(selectedFile);
             }
             else{
                 Stage errorStage = new Stage();
@@ -61,6 +62,7 @@ public class ImportController extends Controller<Session>{
             errorStage.setHeight(100);
             errorStage.setWidth(200);
             ViewLoader.showStage(new OSError("No file selected"), "/view/Error.fxml", "ERROR", errorStage);
+            System.out.println(e.toString());
         }
     }
       

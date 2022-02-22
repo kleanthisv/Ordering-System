@@ -1,6 +1,7 @@
 package model;
 
 import java.io.*;  
+import java.util.ArrayList;
 import java.util.Scanner;  
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ public class Session {
     public Session(){
         this.suppliers = new Suppliers();
         try {
+            importData();
             importSuppliers();
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -37,8 +39,7 @@ public class Session {
         return this.suppliers.hasSupplier(name);
     }
     
-    private void importSuppliers() throws Exception{
-        
+    private void importData() throws Exception{
         try{
             if(appDataDir.mkdir()) System.out.println("AppData directory dreated");
             else System.out.println("AppData directory already exists");
@@ -74,20 +75,21 @@ public class Session {
             System.out.println(e.toString());
             System.out.println("Error with ImportDate.txt");
         }
-        
-        
-        Scanner supplierSc = new Scanner(suppliersCSV);
-        supplierSc.useDelimiter(",");
-        while(supplierSc.hasNext()){
-            suppliers.add(new Supplier(supplierSc.next()));
-        }
-        supplierSc.close();
-        
         Scanner dateSc = new Scanner(dateFile);
         if(dateSc.hasNext()){
             this.salesReportDate.set(dateSc.next());
         }
         dateSc.close();
+    }
+    
+    private void importSuppliers() throws Exception{
+
+        Scanner supplierSc = new Scanner(suppliersCSV);
+        supplierSc.useDelimiter(",");
+        while(supplierSc.hasNext()){
+            suppliers.add(new Supplier(supplierSc.next()));
+        }
+        supplierSc.close();        
     }
     
     public void writeSuppliers() throws Exception{
@@ -108,6 +110,35 @@ public class Session {
             dateWriter.close();
         }
         
+    }
+    
+    public void importSalesReport(File salesReport) throws Exception{
+        BufferedReader reader = new BufferedReader(new FileReader(salesReport));
+        ArrayList<String> lines = new ArrayList<>();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
+            
+        }
+        //list of all incoming products, to be sorted into Orders by supplier name
+        
+        for(String s : lines){ //split line into product and add to list
+            if(!s.equals("product_title,product_vendor,variant_sku,net_quantity")){
+                String[] productArr = s.split(","); //0=title 1=supplier 2=sku 3=quantity
+                
+                if(!suppliers.hasSupplier(productArr[1])){
+                    suppliers.add(new Supplier(productArr[1]));
+                }
+                if(!productArr[2].isEmpty() && suppliers.hasSupplier(productArr[1])){
+                    try{
+                        suppliers.getSupplier(productArr[1]).getOrder().addProduct(new Product(productArr[0],productArr[2],Integer.parseInt(productArr[3])));
+                    }
+                    catch(Exception e){
+                        System.out.println(e.toString() +" when trying to import: " + s);
+                    }
+                }
+            }
+        }
     }
     
     public void setSalesReport(File f){

@@ -6,11 +6,12 @@ import javafx.collections.ObservableList;
 
 public class Order {
     
-    private ObservableList<Product> productList = FXCollections.observableArrayList();
+    private ObservableList<Product> productList;
     
     private Supplier supplier;
     
     public Order(){
+        this.productList = FXCollections.observableArrayList();
     }
     
     public void addAllProducts(ArrayList<Product> products){
@@ -20,10 +21,11 @@ public class Order {
     }
     
     public void addProduct(Product product){
-        if(productExists(product)){
-            product.orderMore(1);
-        }
-        else productList.add(product);
+        productList.add(product);
+    }
+    
+    public void deleteProduct(Product p){
+        productList.remove(p);
     }
     
     private boolean productExists(Product product){

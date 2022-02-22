@@ -34,10 +34,11 @@ public class OrderController extends Controller<Supplier>{
    private void initialize(){
        titleLbl.setText(model.getName() + " Order");
        
-       productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> 
-               makeBackorderBtn.setDisable(newProd == null)
-       
-       );
+       productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
+            makeBackorderBtn.setDisable(newProd == null);
+            adjustQtyBtn.setDisable(newProd == null);
+            deleteProdBtn.setDisable(newProd == null);  
+       });
        
        nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
        skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
@@ -51,11 +52,14 @@ public class OrderController extends Controller<Supplier>{
    }
    
    @FXML void handleDeleteProdBtn(ActionEvent event){
-       
+       Product p = getSelectedProduct();
+       productTv.getSelectionModel().clearSelection();
+       model.getOrder().deleteProduct(p);
    }
    
    @FXML void handleAdjustQtyBtn(ActionEvent event){
-       
+       Product p = getSelectedProduct();
+       productTv.getSelectionModel().clearSelection();
    }
    
    @FXML void handleMakeBackorderBtn(ActionEvent event){
@@ -85,5 +89,9 @@ public class OrderController extends Controller<Supplier>{
            System.out.println(e.toString());
            System.out.println("Error writing order.");
        }
+   }
+   
+   private Product getSelectedProduct(){
+       return productTv.getSelectionModel().getSelectedItem();
    }
 }

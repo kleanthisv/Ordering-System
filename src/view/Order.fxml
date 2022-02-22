@@ -39,11 +39,11 @@
         <Pane HBox.hgrow="ALWAYS"/>
         <Button fx:id="makeBackorderBtn" text="Make Backorder" disable="true" onAction="#handleMakeBackorderBtn"/>  
         <Pane prefWidth="20" />
-        <Button text="Add Product" onAction="#handleAddProdBtn"/> 
-        <Pane prefWidth="20" />
         <Button fx:id="adjustQtyBtn" text="Adjust Quantity" disable="true" onAction="#handleAdjustQtyBtn"/> 
         <Pane prefWidth="20" />
         <Button fx:id="deleteProdBtn" text="Delete Product" disable="true" onAction="#handleDeleteProdBtn"/> 
+        <Pane prefWidth="20" />
+        <Button text="Add Product" onAction="#handleAddProdBtn"/> 
         <Pane HBox.hgrow="ALWAYS"  />   
     </HBox>
     
