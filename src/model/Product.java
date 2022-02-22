@@ -46,8 +46,12 @@ public class Product {
         return this.SKU;
     }
     
+    public BooleanProperty backorderProperty(){
+        return this.isBackorder;
+    }
+    
     public void setBackorder(boolean backorderStatus){
-        this.isBackorder.set(true);
+        this.isBackorder.set(backorderStatus);
         //make the product backorder
     }
     

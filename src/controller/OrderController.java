@@ -3,12 +3,15 @@ package controller;
 import au.edu.uts.ap.javafx.Controller;
 import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.*;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 
@@ -29,9 +32,11 @@ public class OrderController extends Controller<Supplier>{
    @FXML Button adjustQtyBtn;
    @FXML Button deleteProdBtn;
    
-           
+   
+   
    @FXML
    private void initialize(){
+       PseudoClass highlighted = PseudoClass.getPseudoClass("highlighted");
        titleLbl.setText(model.getName() + " Order");
        
        productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
@@ -43,8 +48,10 @@ public class OrderController extends Controller<Supplier>{
        nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
        skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
        qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
-       //initialize table view.
+       
+       
        //if product is backorder, change css so it is highlighted yellow or something
+
    }
    
    @FXML void handleAddProdBtn(ActionEvent event){
@@ -63,6 +70,8 @@ public class OrderController extends Controller<Supplier>{
    }
    
    @FXML void handleMakeBackorderBtn(ActionEvent event){
+       Product p = getSelectedProduct();
+       p.setBackorder(true);
        
    }
    

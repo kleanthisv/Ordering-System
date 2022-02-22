@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
 
-<VBox prefHeight="600" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox prefHeight="750" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
@@ -37,7 +37,7 @@
             <Label fx:id="reportDateLbl"  text="date"/>
         </VBox>
         <Pane prefWidth="75"   /> 
-        <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" >
+        <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" prefWidth="300" prefHeight="500" >
             <placeholder> <Label text="No Supplier"/> </placeholder>
         </ListView>
         <Pane prefWidth="200" />
