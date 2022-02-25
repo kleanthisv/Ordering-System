@@ -12,6 +12,7 @@ public class Session {
     private Suppliers suppliers;
     private String dataFolder = System.getenv("APPDATA");
     private StringProperty salesReportDate = new SimpleStringProperty() ;
+    private final String titleString = "product_title,variant_sku,net_quantity\n";
     
     public final File appDataDir = new File(dataFolder + "\\MX5MANIA Ordering System");
     public final File ordersDir = new File(appDataDir + "\\Orders");
@@ -154,5 +155,21 @@ public class Session {
     
     public StringProperty getReportDate(){
         return this.salesReportDate;
+    }
+    
+    public void writeOrderCSV(Supplier s) throws Exception{
+        File path = new File(this.ordersDir + "\\" + s.getName() + ".csv");
+        
+        FileWriter orderWriter;
+        orderWriter = new FileWriter(path, false);
+        
+        orderWriter.write(titleString);
+        
+        for(Product p : s.getOrder().getList()){
+            orderWriter.write(p.titleProperty().getValue() + ","); 
+            orderWriter.write(p.SKUProperty().getValue() + ",");
+            orderWriter.write(p.quantityProperty().getValue() + "\n");
+            System.out.println("Wrote " + p.SKUProperty().getValue());
+        }
     }
 }

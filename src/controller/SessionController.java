@@ -30,6 +30,9 @@ public class SessionController extends Controller<Session>{
    
    @FXML private void handleExit(ActionEvent event) throws Exception {
        model.writeSuppliers();
+       for(Supplier s : getList()){
+           model.writeOrderCSV(s);
+       }
        this.stage.close();
    }
      
