@@ -7,27 +7,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="200.0" prefWidth="350.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ErrorController">
+<VBox prefHeight="250" prefWidth="300" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.QuantityController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Label styleClass="label-h2" text="ERROR:" /> 
+        <Label styleClass="label-h2" text="Quantity Adjustment:" /> 
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     
-    <Pane prefHeight="50" /> 
-    
-    <HBox >
-        <Pane HBox.hgrow="ALWAYS"/> 
-        <Label fx:id="errorLbl" styleClass="label-error"/>
-        <Pane HBox.hgrow="ALWAYS"/>
-    </HBox>
-        
     <Pane VBox.vgrow="ALWAYS" />
-            
+    
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
         <Button fx:id="closeBtn" onAction="#handleCloseBtn" text="Close"/>

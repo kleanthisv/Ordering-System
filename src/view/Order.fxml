@@ -21,7 +21,7 @@
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <TableView prefWidth="600" fx:id="productTv" items="${controller.list}">
+        <TableView prefWidth="600" fx:id="productTv">
             <placeholder> <Label text="No products in order" /> </placeholder>
             <columns>
                 <TableColumn text="Export?" prefWidth="50"/>

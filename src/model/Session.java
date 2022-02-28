@@ -1,10 +1,12 @@
 package model;
 
+import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.*;  
 import java.util.ArrayList;
 import java.util.Scanner;  
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 
 public class Session {
@@ -121,20 +123,31 @@ public class Session {
             lines.add(line);
             
         }
-        //list of all incoming products, to be sorted into Orders by supplier name
+        ArrayList<String> invalidProducts = new ArrayList<String>();
         
         for(String s : lines){ //split line into product and add to list
             if(!s.equals("product_title,product_vendor,variant_sku,net_quantity")){
                 if(s.replaceAll("[^,]","").length() == 3){ //check if line has comma in it
                     String[] productArr = s.split(","); //0=title 1=supplier 2=sku 3=quantity
-                    productArr[1] = productArr[1].trim();
-                    
-                    if(!suppliers.hasSupplier(productArr[1])){
-                        suppliers.add(new Supplier(productArr[1]));
+                    String supplierName = productArr[1].trim();
+                    String productName = productArr[0];
+                    String productSKU = productArr[2];
+                    int productQty = Integer.parseInt(productArr[3]);
+                 
+                    if(!suppliers.hasSupplier(supplierName)){
+                        suppliers.add(new Supplier(supplierName));
                     }
-                    if(!productArr[2].isEmpty() && suppliers.hasSupplier(productArr[1])){
+                    if(!productArr[2].isEmpty()){
                         try{
-                            suppliers.getSupplier(productArr[1]).getOrder().addProduct(new Product(productArr[0],productArr[2],Integer.parseInt(productArr[3])));
+                            //if the product already exists in the order sheet, update the qty instead of adding new product
+                            if(suppliers.getSupplier(supplierName).hasProduct(productSKU)){ 
+                                Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
+                                p.setQty(p.quantityProperty().getValue() + productQty);
+                            }
+                            else{
+                                suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName,productSKU,productQty));
+                            }
+                            
                         }
                         catch(Exception e){
                             System.out.println(e.toString() +" when trying to import: " + s);
@@ -142,9 +155,18 @@ public class Session {
                     }
                 }
                 else{
-                    System.out.println("Line " + s + " includes a comma.");
+                    System.out.println("Error with line " + s);
+                    invalidProducts.add(s);
                 }
+                
             }
+        }
+        //show all the invalid products as errors
+        for(String errors: invalidProducts){
+            Stage errorStage = new Stage();
+            errorStage.setHeight(100);
+            errorStage.setWidth(200);
+            ViewLoader.showStage(new OSError("Error importing product: \n" + errors), "/view/Error.fxml", "ERROR", errorStage);
         }
     }
     
@@ -171,5 +193,8 @@ public class Session {
             orderWriter.write(p.quantityProperty().getValue() + "\n");
             System.out.println("Wrote " + p.SKUProperty().getValue());
         }
+        
+        orderWriter.flush();
+        orderWriter.close();
     }
 }

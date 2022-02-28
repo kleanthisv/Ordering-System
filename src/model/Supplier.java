@@ -14,8 +14,18 @@ public class Supplier {
         this.order = new Order();
     }
     
-    public void writeOrder() throws Exception{
-        //write order to csv
+    public boolean hasProduct(String SKU){
+        for(Product p : this.order.getList()){
+            if(p.SKUProperty().getValue().matches(SKU)) return true;
+        }
+        return false;
+    }
+    
+    public Product getProduct(String SKU){
+        for(Product p : this.order.getList()){
+            if(p.SKUProperty().getValue().matches(SKU)) return p;
+        }
+        return null;
     }
     
     public Order getOrder(){

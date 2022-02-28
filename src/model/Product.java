@@ -55,8 +55,8 @@ public class Product {
         //make the product backorder
     }
     
-    public void orderMore(int qty){
-        this.quantity.set(this.quantity.getValue() + qty);
+    public void setQty(int qty){
+        this.quantity.set(qty);
     }
     
 }

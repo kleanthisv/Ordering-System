@@ -21,6 +21,7 @@ public class OrderController extends Controller<Supplier>{
    public final Supplier getSupplier() { return model; }
    public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
+   @FXML ObservableList<Product> tempList;
    @FXML TableView<Product> productTv = new TableView<Product>();
    @FXML Label titleLbl;
    
@@ -36,6 +37,10 @@ public class OrderController extends Controller<Supplier>{
    
    @FXML
    private void initialize(){
+       
+       ObservableList<Product> tempList = this.getList().filtered(null);
+       productTv.setItems(tempList);
+       
        PseudoClass highlighted = PseudoClass.getPseudoClass("highlighted");
        titleLbl.setText(model.getName() + " Order");
        
@@ -61,11 +66,15 @@ public class OrderController extends Controller<Supplier>{
    @FXML void handleDeleteProdBtn(ActionEvent event){
        Product p = getSelectedProduct();
        productTv.getSelectionModel().clearSelection();
-       model.getOrder().deleteProduct(p);
+       tempList.remove(p);
    }
    
-   @FXML void handleAdjustQtyBtn(ActionEvent event){
+   @FXML void handleAdjustQtyBtn(ActionEvent event) throws Exception{
        Product p = getSelectedProduct();
+       Stage qtyStage = new Stage();
+       qtyStage.setWidth(100);
+       qtyStage.setHeight(50);
+       ViewLoader.showStage(p, "/view/Quantity.fxml", p.titleProperty().getValue() + "Adjustment", qtyStage);
        productTv.getSelectionModel().clearSelection();
    }
    
@@ -91,7 +100,7 @@ public class OrderController extends Controller<Supplier>{
    @FXML
    private void handleSaveExitBtn(ActionEvent event){
        try{
-           model.writeOrder();
+           
            stage.close();
        }
        catch(Exception e){
