@@ -40,8 +40,7 @@ public class OrderController extends Controller<Supplier>{
        
        ObservableList<Product> tempList = this.getList().filtered(null);
        productTv.setItems(tempList);
-       
-       PseudoClass highlighted = PseudoClass.getPseudoClass("highlighted");
+
        titleLbl.setText(model.getName() + " Order");
        
        productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
@@ -66,7 +65,7 @@ public class OrderController extends Controller<Supplier>{
    @FXML void handleDeleteProdBtn(ActionEvent event){
        Product p = getSelectedProduct();
        productTv.getSelectionModel().clearSelection();
-       tempList.remove(p);
+       getList().remove(p);
    }
    
    @FXML void handleAdjustQtyBtn(ActionEvent event) throws Exception{
@@ -74,7 +73,7 @@ public class OrderController extends Controller<Supplier>{
        Stage qtyStage = new Stage();
        qtyStage.setWidth(100);
        qtyStage.setHeight(50);
-       ViewLoader.showStage(p, "/view/Quantity.fxml", p.titleProperty().getValue() + "Adjustment", qtyStage);
+       ViewLoader.showStage(p, "/view/Quantity.fxml", "Quantity Adjustment", qtyStage);
        productTv.getSelectionModel().clearSelection();
    }
    

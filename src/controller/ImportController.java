@@ -5,8 +5,7 @@ import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
@@ -19,10 +18,12 @@ public class ImportController extends Controller<Session>{
    private File selectedFile;
    @FXML private Label salesReportLbl;
    @FXML ListView<Supplier> supplierLv = new ListView<Supplier>();
+   @FXML Button importBtn;
    
    @FXML
    private void initialize(){
        salesReportLbl.setText("No sales file selected.");
+       importBtn.setDisable(true);
    }
    
    @FXML
@@ -31,9 +32,13 @@ public class ImportController extends Controller<Session>{
            FileChooser fileChooser = new FileChooser();
            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV","*.csv"));
            File tempFile = fileChooser.showOpenDialog(new Stage());
-           if(tempFile.isFile()){
+           String fileName = tempFile.getName();
+           if(tempFile.isFile() && 
+           (fileName.matches("sales_[\\d]{4}-[\\d]{2}-[\\d]{2}.csv") || fileName.matches("sales_[\\d]{4}-[\\d]{2}-[\\d]{2}_[\\d]{4}-[\\d]{2}-[\\d]{2}.csv"))){
+               if(tempFile.getAbsolutePath().equals(model.getSalesReport()));
                selectedFile = tempFile;
                salesReportLbl.setText(selectedFile.getName());
+               importBtn.setDisable(false);
             }
        }
        catch(Exception e){
@@ -43,27 +48,9 @@ public class ImportController extends Controller<Session>{
    
    @FXML
    private void handleImportBtn(ActionEvent event) throws Exception{
-       
-       try{
-            String fileName = selectedFile.getName();
-            if(fileName.contains("sales_")){
-                model.setSalesReport(selectedFile);
-                model.importSalesReport(selectedFile);
-            }
-            else{
-                Stage errorStage = new Stage();
-                errorStage.setHeight(100);
-                errorStage.setWidth(200);
-                ViewLoader.showStage(new OSError("Selected file is not a sales report"), "/view/Error.fxml", "ERROR", errorStage);
-            }
-        }
-        catch(NullPointerException e){
-            Stage errorStage = new Stage();
-            errorStage.setHeight(100);
-            errorStage.setWidth(200);
-            ViewLoader.showStage(new OSError("No file selected"), "/view/Error.fxml", "ERROR", errorStage);
-            System.out.println(e.toString());
-        }
+        model.setSalesReport(selectedFile);
+        model.importSalesReport(selectedFile);
+        importBtn.setDisable(true);
     }
       
    @FXML

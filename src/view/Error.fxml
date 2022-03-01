@@ -12,15 +12,17 @@
         <URL value="@mx5.css"/>
     </stylesheets>
     
-    <HBox >
+    <Pane prefHeight="10" /> 
+    
+    <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
         <Label styleClass="label-h2" text="ERROR:" /> 
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     
-    <Pane prefHeight="50" /> 
+    <Pane prefHeight="30" />
     
-    <HBox >
+    <HBox>
         <Pane HBox.hgrow="ALWAYS"/> 
         <Label fx:id="errorLbl" styleClass="label-error"/>
         <Pane HBox.hgrow="ALWAYS"/>
@@ -34,6 +36,6 @@
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     
-    <Pane prefHeight="30" /> 
+    <Pane prefHeight="20" /> 
     
 </VBox>

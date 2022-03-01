@@ -6,13 +6,11 @@
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/OrderController.java</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/SessionController.java</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Order.java</file>
-            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Supplier.java</file>
-            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/ordering/system/OrderingSystem.java</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Session.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/QuantityController.java</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Order.fxml</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Session.fxml</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Product.java</file>
-            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Suppliers.java</file>
         </group>
     </open-files>
 </project-private>

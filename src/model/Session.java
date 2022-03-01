@@ -32,6 +32,13 @@ public class Session {
             ex.printStackTrace();
             System.out.println("Error importing suppliers.");
         }
+        try{
+            importOrders();
+        } catch (Exception exc){
+            System.out.println(exc.toString());
+            exc.printStackTrace();
+            System.out.println("Error importing orders.");
+        }
     }
     
     public ObservableList<Supplier> getSuppliers(){
@@ -43,6 +50,7 @@ public class Session {
     }
     
     private void importData() throws Exception{
+        //create AppData directory
         try{
             if(appDataDir.mkdir()) System.out.println("AppData directory dreated");
             else System.out.println("AppData directory already exists");
@@ -52,6 +60,7 @@ public class Session {
             System.out.println("Error with AppData directory");
         }
         
+        //create Orders directory
         try{
             if(ordersDir.mkdir()) System.out.println("Orders directory dreated");
             else System.out.println("Orders directory already exists");
@@ -61,6 +70,7 @@ public class Session {
             System.out.println("Error with Orders directory");
         }
         
+        //create Supplier csv
         try{
             if(suppliersCSV.createNewFile()) System.out.println("Suppliers.csv Created");
             else System.out.println("Suppliers.csv already exists");
@@ -70,6 +80,7 @@ public class Session {
             System.out.println("Error with Suppliers.csv");
         }
         
+        //read in last import date
         try{
             if(dateFile.createNewFile()) System.out.println("ImportDate.txt Created");
             else System.out.println("ImportDate.txt already exists");
@@ -93,6 +104,36 @@ public class Session {
             suppliers.add(new Supplier(supplierSc.next()));
         }
         supplierSc.close();        
+    }
+    
+    private void importOrders() throws Exception {
+        for (Supplier supplier : suppliers.getSuppliers()) {
+            String orderPath = ordersDir + "\\" + supplier.getName() + ".csv";
+            File orderFile = new File(orderPath);
+
+            BufferedReader reader = new BufferedReader(new FileReader(orderFile));
+            ArrayList<String> lines = new ArrayList<>();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            for (String s : lines) { //split line into product and add to list
+                if (!s.equals("product_title,variant_sku,net_quantity")) {
+                    if (s.replaceAll("[^,]", "").length() == 2) { //check if line has comma in it
+                        String[] productArr = s.split(","); //0=title 1=sku 2=quantity
+                        String productName = productArr[0];
+                        String productSKU = productArr[1];
+                        int productQty = Integer.parseInt(productArr[2]);
+
+                        supplier.getOrder().addProduct(new Product(productName, productSKU, productQty));
+                    } else {
+                        System.out.println("Error with line " + s);
+                    }
+                }
+            }
+
+        }
     }
     
     public void writeSuppliers() throws Exception{
@@ -121,7 +162,6 @@ public class Session {
         String line = null;
         while ((line = reader.readLine()) != null) {
             lines.add(line);
-            
         }
         ArrayList<String> invalidProducts = new ArrayList<String>();
         
@@ -175,6 +215,10 @@ public class Session {
         this.salesReportDate.set(salesReportCSV.getName().substring(6,salesReportCSV.getName().length()-4));
     }
     
+    public File getSalesReport(){
+        return this.salesReportCSV;
+    }
+    
     public StringProperty getReportDate(){
         return this.salesReportDate;
     }
@@ -191,7 +235,6 @@ public class Session {
             orderWriter.write(p.titleProperty().getValue() + ","); 
             orderWriter.write(p.SKUProperty().getValue() + ",");
             orderWriter.write(p.quantityProperty().getValue() + "\n");
-            System.out.println("Wrote " + p.SKUProperty().getValue());
         }
         
         orderWriter.flush();

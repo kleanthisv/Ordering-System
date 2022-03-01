@@ -21,6 +21,10 @@
     -fx-text-fill: red;
 }
 
+.button-adjust{
+    -prefWidth: 20;
+}
+
 .mainFxmlClass {
 
 }

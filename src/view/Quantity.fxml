@@ -14,15 +14,46 @@
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Label styleClass="label-h2" text="Quantity Adjustment:" /> 
+        <Label fx:id="titleLbl" styleClass="label-h2"/> 
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Label styleClass="label-h2" text="Quantity Adjustment:" />
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <Pane prefHeight="50" />
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <GridPane hgap="5" vgap="5" >
+            <Label text="Current Qty:"
+                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="currQtyLbl" styleClass="label-bold" 
+                GridPane.columnIndex="1" GridPane.rowIndex="0" />    
+            
+            <Label text="New Qty:"
+                GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="qtyTf" prefWidth="50" 
+                GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button styleClass="button-adjust" fx:id="plusBtn" text="+" onAction="#handlePlusBtn" 
+                GridPane.columnIndex="3" GridPane.rowIndex="1" />  
+            <Button styleClass="button-adjust" fx:id="minusBtn" text="-" onAction="#handleMinusBtn"
+                GridPane.columnIndex="4" GridPane.rowIndex="1" /> 
+        </GridPane>
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+         
     
     <Pane VBox.vgrow="ALWAYS" />
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button fx:id="closeBtn" onAction="#handleCloseBtn" text="Close"/>
+        <Button onAction="#handleSetQtyBtn" text="Set Qty"/>
+        <Pane prefWidth="10" />
+        <Button onAction="#handleCloseBtn" text="Close"/>
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     

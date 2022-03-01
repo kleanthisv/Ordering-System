@@ -18,9 +18,7 @@
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
-    <Pane prefHeight="50" /> 
-    
-    
+    <Pane prefHeight="50" />  
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS" minWidth="50"  />
@@ -35,9 +33,9 @@
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
+        <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Report" onAction="#handleSelectBtn" />
         <Pane prefWidth="20" />
-        <Button text="Import Selected Report" onAction="#handleImportBtn" />
+        <Button fx:id="importBtn" text="Import Report" onAction="#handleImportBtn" />
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     
