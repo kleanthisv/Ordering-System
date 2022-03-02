@@ -4,14 +4,12 @@ import au.edu.uts.ap.javafx.Controller;
 import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.*;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.*;
 
@@ -21,7 +19,8 @@ public class OrderController extends Controller<Supplier>{
    public final Supplier getSupplier() { return model; }
    public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
-   @FXML ObservableList<Product> tempList;
+   
+   @FXML ObservableList<Product> tempList = FXCollections.observableArrayList();
    @FXML TableView<Product> productTv = new TableView<Product>();
    @FXML Label titleLbl;
    
@@ -38,7 +37,8 @@ public class OrderController extends Controller<Supplier>{
    @FXML
    private void initialize(){
        
-       ObservableList<Product> tempList = this.getList().filtered(null);
+       
+       this.getList().forEach(p -> tempList.add(p));
        productTv.setItems(tempList);
 
        titleLbl.setText(model.getName() + " Order");
@@ -65,7 +65,7 @@ public class OrderController extends Controller<Supplier>{
    @FXML void handleDeleteProdBtn(ActionEvent event){
        Product p = getSelectedProduct();
        productTv.getSelectionModel().clearSelection();
-       getList().remove(p);
+       tempList.remove(p);
    }
    
    @FXML void handleAdjustQtyBtn(ActionEvent event) throws Exception{
@@ -99,7 +99,8 @@ public class OrderController extends Controller<Supplier>{
    @FXML
    private void handleSaveExitBtn(ActionEvent event){
        try{
-           
+           this.getList().clear();
+           this.tempList.forEach(p -> this.getList().add(p));
            stage.close();
        }
        catch(Exception e){
