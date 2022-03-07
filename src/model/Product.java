@@ -17,6 +17,7 @@ public class Product {
     private IntegerProperty quantity;
     private StringProperty SKU;
     private StringProperty title;
+    private BooleanProperty export;
     private BooleanProperty isBackorder;
     
     public Product(String title, String SKU, int qty){
@@ -32,6 +33,9 @@ public class Product {
         
         this.isBackorder = new SimpleBooleanProperty();
         this.isBackorder.set(false);
+        
+        this.export = new SimpleBooleanProperty();
+        this.export.set(false);
     }
     
     public ObservableValue<Integer> quantityProperty(){
@@ -50,9 +54,16 @@ public class Product {
         return this.isBackorder;
     }
     
-    public void setBackorder(boolean backorderStatus){
-        this.isBackorder.set(backorderStatus);
-        //make the product backorder
+    public BooleanProperty exportProperty(){
+        return this.export;
+    }
+    
+    public void setBackorder(boolean b){
+        this.isBackorder.set(b);
+    }
+    
+    public void setExport(boolean b){
+        this.export.set(b);
     }
     
     public void setQty(int qty){

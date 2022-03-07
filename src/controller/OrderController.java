@@ -7,10 +7,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.*;
 
 
@@ -24,6 +28,8 @@ public class OrderController extends Controller<Supplier>{
    @FXML TableView<Product> productTv = new TableView<Product>();
    @FXML Label titleLbl;
    
+   @FXML TableColumn<Product, Boolean> exportClm;
+   @FXML TableColumn<Product, Boolean> backOrderClm;
    @FXML TableColumn<Product, String> nameClm;
    @FXML TableColumn<Product, String> skuClm;
    @FXML TableColumn<Product, Integer> qtyClm;
@@ -31,37 +37,43 @@ public class OrderController extends Controller<Supplier>{
    @FXML Button makeBackorderBtn;
    @FXML Button adjustQtyBtn;
    @FXML Button deleteProdBtn;
+   @FXML Button selectBtn;
    
    
    
    @FXML
    private void initialize(){
-       
-       
+              
        this.getList().forEach(p -> tempList.add(p));
        productTv.setItems(tempList);
-
+       
        titleLbl.setText(model.getName() + " Order");
        
        productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
             makeBackorderBtn.setDisable(newProd == null);
             adjustQtyBtn.setDisable(newProd == null);
-            deleteProdBtn.setDisable(newProd == null);  
+            deleteProdBtn.setDisable(newProd == null);
+            selectBtn.setDisable(newProd == null);
        });
+       
        
        nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
        skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
        qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
        
+       backOrderClm.setCellValueFactory(cellData -> cellData.getValue().backorderProperty());
+       backOrderClm.setCellFactory( tc -> new CheckBoxTableCell<>());
        
-       //if product is backorder, change css so it is highlighted yellow or something
+       exportClm.setCellValueFactory(cellData -> cellData.getValue().exportProperty());
+       exportClm.setCellFactory( tc -> new CheckBoxTableCell<>());
+       
+   }
 
-   }
-   
-   @FXML void handleAddProdBtn(ActionEvent event){
-       
-   }
-   
+    @FXML void handleAddProdBtn(ActionEvent event) throws Exception{
+        Stage addStage = new Stage();
+        ViewLoader.showStage(model, "/view/AddProduct.fxml", "Add Product", addStage);
+    }
+
    @FXML void handleDeleteProdBtn(ActionEvent event){
        Product p = getSelectedProduct();
        productTv.getSelectionModel().clearSelection();
@@ -79,16 +91,65 @@ public class OrderController extends Controller<Supplier>{
    
    @FXML void handleMakeBackorderBtn(ActionEvent event){
        Product p = getSelectedProduct();
-       p.setBackorder(true);
+       if(p.backorderProperty().getValue()){
+           p.setBackorder(false);
+       }
+       else p.setBackorder(true);
        
    }
    
-   @FXML void handleExportSelectedBtn(){
-       
+   @FXML void handleSelectBtn(ActionEvent event){
+      Product p = getSelectedProduct();
+      if(p.exportProperty().getValue()){
+          p.setExport(false);
+      }
+      else p.setExport(true);
    }
    
-   @FXML void handleExportAllBtn(){
-       
+    @FXML
+    void handleExportSelectedBtn() throws Exception{
+
+        ObservableList<Product> exportList = FXCollections.observableArrayList();
+
+        for (Product p : productTv.getItems()) {
+            if (p.exportProperty().getValue()) {
+                exportList.add(p);
+            }
+        }
+
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        fileChooser.setInitialFileName(model.getName() + " Order" + ".csv");
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+            exportOrder(exportList ,file);
+            for(Product p : exportList){
+                this.tempList.remove(p);
+            }
+        }
+    }
+   
+   @FXML void handleExportAllBtn() throws Exception{
+        
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        fileChooser.setInitialFileName(model.getName() + " Order" + ".csv");
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(new Stage());
+        
+        exportOrder(this.tempList , file);
+        
+        this.tempList.clear();
    }
    
    @FXML
@@ -109,7 +170,44 @@ public class OrderController extends Controller<Supplier>{
        }
    }
    
-   private Product getSelectedProduct(){
-       return productTv.getSelectionModel().getSelectedItem();
-   }
+    private void exportOrder(ObservableList<Product> list, File f) throws Exception{
+        FileWriter orderWriter;
+        orderWriter = new FileWriter(f.getPath(), false);
+        
+        orderWriter.write("Product Name,SKU,Quantity,Backorder\n");
+        
+        orderWriter.write("\n");
+        
+        for(Product p : list) {
+            if (p.backorderProperty().getValue()) {
+                orderWriter.write(p.titleProperty().getValue() + ",");
+                orderWriter.write(p.SKUProperty().getValue() + ",");
+                orderWriter.write(p.quantityProperty().getValue() + ",");
+                orderWriter.write(p.backorderProperty().getValue() + "\n");
+            }
+        }
+        
+        orderWriter.write("\n");
+
+        for (Product p : list) {
+            if (!p.backorderProperty().getValue()) {
+                orderWriter.write(p.titleProperty().getValue() + ",");
+                orderWriter.write(p.SKUProperty().getValue() + ",");
+                orderWriter.write(p.quantityProperty().getValue() + ",");
+                orderWriter.write(p.backorderProperty().getValue() + "\n");
+            }
+        }
+
+        orderWriter.flush();
+        orderWriter.close();
+        
+    }
+    
+    public void addProduct(Product p) {
+        this.tempList.add(p);
+    }
+
+    private Product getSelectedProduct() {
+        return productTv.getSelectionModel().getSelectedItem();
+    }
 }

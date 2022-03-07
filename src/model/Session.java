@@ -119,14 +119,17 @@ public class Session {
             }
 
             for (String s : lines) { //split line into product and add to list
-                if (!s.equals("product_title,variant_sku,net_quantity")) {
-                    if (s.replaceAll("[^,]", "").length() == 2) { //check if line has comma in it
+                if (!s.equals("product_title,variant_sku,net_quantity,bo_status")) {
+                    if (s.replaceAll("[^,]", "").length() == 3) { //check if line has comma in it
                         String[] productArr = s.split(","); //0=title 1=sku 2=quantity
                         String productName = productArr[0];
                         String productSKU = productArr[1];
                         int productQty = Integer.parseInt(productArr[2]);
-
-                        supplier.getOrder().addProduct(new Product(productName, productSKU, productQty));
+                        Product p = new Product(productName, productSKU, productQty);
+                        
+                        //check if item is backorder
+                        if(productArr[3].equals("true")) p.setBackorder(true);
+                        supplier.getOrder().addProduct(p);
                     } else {
                         System.out.println("Error with line " + s);
                     }
@@ -229,12 +232,13 @@ public class Session {
         FileWriter orderWriter;
         orderWriter = new FileWriter(path, false);
         
-        orderWriter.write(titleString);
+        orderWriter.write("product_title,variant_sku,net_quantity,bo_status\n");
         
         for(Product p : s.getOrder().getList()){
             orderWriter.write(p.titleProperty().getValue() + ","); 
             orderWriter.write(p.SKUProperty().getValue() + ",");
-            orderWriter.write(p.quantityProperty().getValue() + "\n");
+            orderWriter.write(p.quantityProperty().getValue() + ",");
+            orderWriter.write(p.backorderProperty().getValue() + "\n");
         }
         
         orderWriter.flush();

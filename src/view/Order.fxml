@@ -7,8 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
+<?import au.edu.uts.ap.javafx.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="750.0" fx:controller="controller.OrderController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" fx:controller="controller.OrderController">
     <stylesheets>
         <URL value="@mx5.css"/>
     </stylesheets>
@@ -21,13 +22,14 @@
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <TableView prefWidth="600" fx:id="productTv">
+        <TableView prefWidth="700" fx:id="productTv">
             <placeholder> <Label text="No products in order" /> </placeholder>
             <columns>
-                <TableColumn text="Export?" prefWidth="50"/>
-                <TableColumn fx:id="nameClm" text="Name" prefWidth="250"/> 
+                <TableColumn text="Ex?" prefWidth="50" fx:id="exportClm"/>
+                <TableColumn fx:id="nameClm" text="Name" prefWidth="300"/> 
                 <TableColumn fx:id="skuClm" text="SKU" prefWidth="200"/> 
                 <TableColumn fx:id="qtyClm" text="Quantity" prefWidth="100"/> 
+                <TableColumn fx:id="backOrderClm" text="B/O?" prefWidth="50" /> 
             </columns>
         </TableView>
         <Pane HBox.hgrow="ALWAYS"  /> 
@@ -51,10 +53,12 @@
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Export Selected" onAction="#handleExportSelectedBtn"/>  
+        <Button text="Select" fx:id="selectBtn" onAction="#handleSelectBtn" disable="true" />
         <Pane prefWidth="20" />
-        <Button text="Export All" onAction="#handleExportAllBtn"/> 
-        <Pane HBox.hgrow="ALWAYS"  />   
+        <Button text="Export Selected" onAction="#handleExportSelectedBtn"/>
+        <Pane prefWidth="20" />
+        <Button text="Export All" onAction="#handleExportAllBtn"/>
+        <Pane HBox.hgrow="ALWAYS"  />
     </HBox>     
     
     <Pane VBox.vgrow="ALWAYS"/> 
