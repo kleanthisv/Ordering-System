@@ -71,6 +71,12 @@ public class OrderController extends Controller<Supplier>{
 
     @FXML void handleAddProdBtn(ActionEvent event) throws Exception{
         Stage addStage = new Stage();
+        addStage.setOnHiding(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                model.getOrder().getList().forEach(p -> tempList.add(p));
+                productTv.setItems(tempList);
+            }
+        });
         ViewLoader.showStage(model, "/view/AddProduct.fxml", "Add Product", addStage);
     }
 
@@ -201,10 +207,6 @@ public class OrderController extends Controller<Supplier>{
         orderWriter.flush();
         orderWriter.close();
         
-    }
-    
-    public void addProduct(Product p) {
-        this.tempList.add(p);
     }
 
     private Product getSelectedProduct() {
