@@ -101,7 +101,6 @@ public class OrderController extends Controller<Supplier>{
            p.setBackorder(false);
        }
        else p.setBackorder(true);
-       
    }
    
    @FXML void handleSelectBtn(ActionEvent event){
@@ -122,23 +121,33 @@ public class OrderController extends Controller<Supplier>{
                 exportList.add(p);
             }
         }
+        
+        if (!exportList.isEmpty()) {
+            
 
-        FileChooser fileChooser = new FileChooser();
+            FileChooser fileChooser = new FileChooser();
 
-        //Set extension filter for text files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV", "*.csv");
-        fileChooser.getExtensionFilters().add(extFilter);
+            //Set extension filter for text files
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV", "*.csv");
+            fileChooser.getExtensionFilters().add(extFilter);
 
-        fileChooser.setInitialFileName(model.getName() + " Order" + ".csv");
-        //Show save file dialog
-        File file = fileChooser.showSaveDialog(new Stage());
+            fileChooser.setInitialFileName(model.getName() + " Order" + ".csv");
+            //Show save file dialog
+            File file = fileChooser.showSaveDialog(new Stage());
 
-        if (file != null) {
-            exportOrder(exportList ,file);
-            for(Product p : exportList){
-                this.tempList.remove(p);
+            if (file != null) {
+                exportOrder(exportList, file);
+                for (Product p : exportList) {
+                    this.tempList.remove(p);
+                }
             }
+        } 
+        else {
+            Stage errorStage = new Stage();
+            ViewLoader.showStage(new OSError("No products selected"), "/view/Error.fxml", "ERROR", errorStage);
         }
+        
+        
     }
    
    @FXML void handleExportAllBtn() throws Exception{

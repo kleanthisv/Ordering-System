@@ -50,8 +50,6 @@
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
         <Button text="Open Order" fx:id="openOrderBtn" disable="true"  onAction="#handleOpenOrderBtn"  />
-        <Pane prefWidth="20"/>
-        <Button text="Button 3" />
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
          
