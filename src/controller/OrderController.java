@@ -44,7 +44,7 @@ public class OrderController extends Controller<Supplier>{
    
    @FXML
    private void initialize(){
-       stage.getIcons().add(new Image("file:src/view/icon.png"));
+       stage.getIcons().add(new Image("file:view/icon.png"));
        
        this.getList().forEach(p -> tempList.add(p));
        productTv.setItems(tempList);

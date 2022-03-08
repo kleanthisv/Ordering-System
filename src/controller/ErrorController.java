@@ -16,7 +16,7 @@ public class ErrorController extends Controller<OSError>{
    
    @FXML
    private void initialize(){
-       stage.getIcons().add(new Image("file:src/view/icon.png"));
+       stage.getIcons().add(new Image("file:view/icon.png"));
        errorLbl.setText(model.toString());
    }
    
