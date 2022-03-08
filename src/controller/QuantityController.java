@@ -21,7 +21,7 @@ public class QuantityController extends Controller<Product> {
     
     @FXML
     private void initialize() {
-        stage.getIcons().add(new Image("file:view/icon.png"));
+        stage.getIcons().add(new Image(QuantityController.class.getResourceAsStream("/view/icon.png")));
         titleLbl.setText(model.SKUProperty().getValue());
         currQtyLbl.setText(model.quantityProperty().getValue() + "");
         qtyTf.setText(model.quantityProperty().getValue() + "" );

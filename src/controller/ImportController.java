@@ -23,7 +23,7 @@ public class ImportController extends Controller<Session>{
    
    @FXML
    private void initialize(){
-       stage.getIcons().add(new Image("file:view/icon.png"));
+       stage.getIcons().add(new Image(ImportController.class.getResourceAsStream("/view/icon.png")));
        salesReportLbl.setText("No sales file selected.");
        importBtn.setDisable(true);
    }

@@ -33,10 +33,9 @@ public class SessionController extends Controller<Session> {
 
     @FXML
     private void initialize() {
-        stage.getIcons().add(new Image("file:view/icon.png"));
         suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> openOrderBtn.setDisable(newAcct == null));
         reportDateLbl.textProperty().bind(model.getReportDate());
-        logo.setImage(new Image("file:src/view/logo.png"));
+        logo.setImage(new Image(SessionController.class.getResourceAsStream("/view/logo.png")));
     }
 
     @FXML

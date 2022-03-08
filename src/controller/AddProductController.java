@@ -21,7 +21,7 @@ public class AddProductController extends Controller<Supplier> {
     
     @FXML
     private void initialize() {
-        stage.getIcons().add(new Image("file:view/icon.png"));
+        stage.getIcons().add(new Image(AddProductController.class.getResourceAsStream("/view/icon.png")));
         qtyTf.setText("0");
         
         qtyTf.textProperty().addListener(new ChangeListener<String>() {

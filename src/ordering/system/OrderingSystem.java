@@ -22,7 +22,7 @@ public class OrderingSystem extends Application {
     public void start(Stage stage) throws Exception {
         
         stage.centerOnScreen();
-        stage.getIcons().add(new Image("file:src/view/icon.png"));
+        stage.getIcons().add(new Image(OrderingSystem.class.getResourceAsStream("/view/icon.png")));
         ViewLoader.showStage(new Session(), "/view/Session.fxml", "MX5Mania Ordering System", stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
