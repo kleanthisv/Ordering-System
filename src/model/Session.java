@@ -175,6 +175,10 @@ public class Session {
                     String supplierName = productArr[1].trim();
                     String productName = productArr[0];
                     String productSKU = productArr[2];
+                    if(supplierName.contains("/") || supplierName.contains("\\")){
+                        supplierName = supplierName.replace("/", "-");
+                        supplierName = supplierName.replace("\\", "-");
+                    }
                     int productQty = Integer.parseInt(productArr[3]);
                  
                     if(!suppliers.hasSupplier(supplierName)){

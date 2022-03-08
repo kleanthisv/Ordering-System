@@ -75,8 +75,8 @@ public class OrderController extends Controller<Supplier>{
         Stage addStage = new Stage();
         addStage.setOnHiding(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
+                tempList.clear();
                 model.getOrder().getList().forEach(p -> tempList.add(p));
-                productTv.setItems(tempList);
             }
         });
         ViewLoader.showStage(model, "/view/AddProduct.fxml", "Add Product", addStage);
