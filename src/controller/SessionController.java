@@ -2,6 +2,7 @@ package controller;
 
 import au.edu.uts.ap.javafx.Controller;
 import au.edu.uts.ap.javafx.ViewLoader;
+import java.io.File;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.*;
 
@@ -26,11 +29,14 @@ public class SessionController extends Controller<Session> {
     @FXML private ListView suppliersLv;
     @FXML private Label reportDateLbl;
     @FXML private Button openOrderBtn;
+    @FXML private ImageView logo;
 
     @FXML
     private void initialize() {
+        stage.getIcons().add(new Image("file:src/view/icon.png"));
         suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> openOrderBtn.setDisable(newAcct == null));
         reportDateLbl.textProperty().bind(model.getReportDate());
+        logo.setImage(new Image("file:src/view/logo.png"));
     }
 
     @FXML

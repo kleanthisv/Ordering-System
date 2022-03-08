@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import model.*;
 
 public class AddProductController extends Controller<Supplier> {
@@ -20,7 +21,7 @@ public class AddProductController extends Controller<Supplier> {
     
     @FXML
     private void initialize() {
-        
+        stage.getIcons().add(new Image("file:src/view/icon.png"));
         qtyTf.setText("0");
         
         qtyTf.textProperty().addListener(new ChangeListener<String>() {

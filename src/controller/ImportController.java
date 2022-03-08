@@ -6,6 +6,7 @@ import java.io.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
@@ -22,6 +23,7 @@ public class ImportController extends Controller<Session>{
    
    @FXML
    private void initialize(){
+       stage.getIcons().add(new Image("file:src/view/icon.png"));
        salesReportLbl.setText("No sales file selected.");
        importBtn.setDisable(true);
    }

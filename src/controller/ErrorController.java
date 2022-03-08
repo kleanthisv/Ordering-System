@@ -4,6 +4,7 @@ import au.edu.uts.ap.javafx.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import model.*;
 
 
@@ -15,6 +16,7 @@ public class ErrorController extends Controller<OSError>{
    
    @FXML
    private void initialize(){
+       stage.getIcons().add(new Image("file:src/view/icon.png"));
        errorLbl.setText(model.toString());
    }
    

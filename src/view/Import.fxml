@@ -12,13 +12,15 @@
         <URL value="@mx5.css"/>
     </stylesheets>
     
+    <Pane minHeight="10" />
+    
     <HBox >
         <Pane HBox.hgrow="ALWAYS" /> 
         <Label styleClass="label-h2" text="Sales Report Selection" underline="true" />
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
-    <Pane prefHeight="50" />  
+    <Pane minHeight="30" />  
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS" minWidth="50"  />
@@ -39,7 +41,7 @@
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     
-    <Pane prefHeight="10" />
+    <Pane minHeight="10" />
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>

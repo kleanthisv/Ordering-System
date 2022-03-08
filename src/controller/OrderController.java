@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -43,7 +44,8 @@ public class OrderController extends Controller<Supplier>{
    
    @FXML
    private void initialize(){
-              
+       stage.getIcons().add(new Image("file:src/view/icon.png"));
+       
        this.getList().forEach(p -> tempList.add(p));
        productTv.setItems(tempList);
        

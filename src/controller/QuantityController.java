@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import model.*;
 
 public class QuantityController extends Controller<Product> {
@@ -20,6 +21,7 @@ public class QuantityController extends Controller<Product> {
     
     @FXML
     private void initialize() {
+        stage.getIcons().add(new Image("file:src/view/icon.png"));
         titleLbl.setText(model.SKUProperty().getValue());
         currQtyLbl.setText(model.quantityProperty().getValue() + "");
         qtyTf.setText(model.quantityProperty().getValue() + "" );

@@ -14,6 +14,8 @@
         <URL value="@mx5.css"/>
     </stylesheets>
     
+    <Pane minHeight="10" />
+    
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
         <Label fx:id="titleLbl" styleClass="label-h2"/>
@@ -35,7 +37,7 @@
         <Pane HBox.hgrow="ALWAYS"  /> 
     </HBox>
     
-    <Pane prefHeight="10" /> 
+    <Pane minHeight="10" /> 
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
@@ -49,7 +51,7 @@
         <Pane HBox.hgrow="ALWAYS"  />   
     </HBox>
     
-    <Pane prefHeight="20" />
+    <Pane minHeight="20" />
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
@@ -71,5 +73,5 @@
         <Pane prefWidth="50" />  
     </HBox>
     
-    <Pane prefHeight="20" /> 
+    <Pane minHeight="20" /> 
 </VBox>
