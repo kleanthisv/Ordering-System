@@ -227,7 +227,12 @@ public class Session {
     }
     
     public void writeOrderCSV(Supplier s) throws Exception{
-        File path = new File(this.ordersDir + "\\" + s.getName() + ".csv");
+        String name = s.getName();
+        if(name.contains("/") || name.contains("\\")){
+            name = name.replace("\\", "-");
+            name = name.replace("/", "-");
+        }
+        File path = new File(this.ordersDir + "\\" + name + ".csv");
         
         FileWriter orderWriter;
         orderWriter = new FileWriter(path, false);
