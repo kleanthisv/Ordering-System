@@ -24,7 +24,7 @@ public class OrderingSystem extends Application {
         stage.centerOnScreen();
         stage.getIcons().add(new Image("file:src/view/icon.png"));
         ViewLoader.showStage(new Session(), "/view/Session.fxml", "MX5Mania Ordering System", stage);
-        stage.setOnHidden(new EventHandler<WindowEvent>() {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
