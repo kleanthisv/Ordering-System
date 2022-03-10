@@ -27,17 +27,28 @@
         <GridPane >
             <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Current Selection:" styleClass="label-bold" />
             <Label GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="salesReportLbl" /> 
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="orderLbl" /> 
         </GridPane>
         <Pane HBox.hgrow="ALWAYS" minWidth="50"  />   
     </HBox>
     
-    <Pane VBox.vgrow="ALWAYS"/> 
+    <Pane VBox.vgrow="ALWAYS"/>
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Report" onAction="#handleSelectBtn" />
-        <Pane prefWidth="20" />
+        <Button text="Select Report" onAction="#handleSelectBtn" />
+        <Pane prefWidth="10" />
         <Button fx:id="importBtn" text="Import Report" onAction="#handleImportBtn" />
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <Pane minHeight="10"/> 
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Select Order" onAction="#handleSelectOrderBtn" />
+        <Pane prefWidth="10" />
+        <Button fx:id="importOrderBtn" text="Import Order" onAction="#handleImportOrderBtn" />
         <Pane HBox.hgrow="ALWAYS"/>
     </HBox>
     

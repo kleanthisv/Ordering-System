@@ -13,6 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -24,6 +28,9 @@ public class OrderController extends Controller<Supplier>{
    public final Supplier getSupplier() { return model; }
    public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
+   private boolean allSelected;
+   final Clipboard clipboard = Clipboard.getSystemClipboard();
+   final ClipboardContent content = new ClipboardContent();
    
    @FXML ObservableList<Product> tempList = FXCollections.observableArrayList();
    @FXML TableView<Product> productTv = new TableView<Product>();
@@ -41,9 +48,10 @@ public class OrderController extends Controller<Supplier>{
    @FXML Button selectBtn;
    
    
-   
    @FXML
    private void initialize(){
+       allSelected = false;
+       
        stage.getIcons().add(new Image(OrderController.class.getResourceAsStream("/view/icon.png")));
        
        this.getList().forEach(p -> tempList.add(p));
@@ -55,19 +63,64 @@ public class OrderController extends Controller<Supplier>{
             makeBackorderBtn.setDisable(newProd == null);
             adjustQtyBtn.setDisable(newProd == null);
             deleteProdBtn.setDisable(newProd == null);
-            selectBtn.setDisable(newProd == null);
        });
-       
        
        nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
        skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
        qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
+       
        
        backOrderClm.setCellValueFactory(cellData -> cellData.getValue().backorderProperty());
        backOrderClm.setCellFactory( tc -> new CheckBoxTableCell<>());
        
        exportClm.setCellValueFactory(cellData -> cellData.getValue().exportProperty());
        exportClm.setCellFactory( tc -> new CheckBoxTableCell<>());
+       
+       //ON KEYPRESS
+       productTv.setOnKeyPressed(e -> {
+           //MAKE BACKORDER IF KEYPRESS IS B
+           if (e.getCode() == KeyCode.B) {
+               try {
+                   makeBackorder();
+               } catch (Exception ex) {
+                   System.out.println(ex);
+               }
+           }
+
+           //SELECT IF KEYPRESS IS S
+           if (e.getCode() == KeyCode.S) {
+               try {
+                   selectItem();
+               } catch (Exception ex) {
+                   System.out.println(ex);
+               }
+           }
+           //COPY SKU IF KEYPRESS IS C
+           if (e.getCode() == KeyCode.C) {
+               try {
+                   content.putString(getSelectedProduct().SKUProperty().getValue());
+                   clipboard.setContent(content);
+               } catch (Exception ex) {
+                   System.out.println(ex);
+               }
+           }
+       });
+
+       //SELECT ON DOUBLE CLICK
+       productTv.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    try{
+                        selectItem();
+                        productTv.getSelectionModel().clearSelection();
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        });
        
    }
 
@@ -105,13 +158,21 @@ public class OrderController extends Controller<Supplier>{
        else p.setBackorder(true);
    }
    
-   @FXML void handleSelectBtn(ActionEvent event){
-      Product p = getSelectedProduct();
-      if(p.exportProperty().getValue()){
-          p.setExport(false);
-      }
-      else p.setExport(true);
-   }
+    @FXML
+    void handleSelectBtn(ActionEvent event) {        
+        if (allSelected) {
+            for (Product p : productTv.getItems()) {
+                p.setExport(false);
+            }
+        } else {
+            for (Product p : productTv.getItems()) {
+                p.setExport(true);
+            }
+        }
+        
+        allSelected = !allSelected;
+        
+    }
    
     @FXML
     void handleExportSelectedBtn() throws Exception{
@@ -218,6 +279,24 @@ public class OrderController extends Controller<Supplier>{
         orderWriter.flush();
         orderWriter.close();
         
+    }
+    
+    private void selectItem() {
+        Product p = getSelectedProduct();
+        if (p.exportProperty().getValue()) {
+            p.setExport(false);
+        } else {
+            p.setExport(true);
+        }
+    }
+    
+    private void makeBackorder() {
+        Product p = getSelectedProduct();
+        if (p.backorderProperty().getValue()) {
+            p.setBackorder(false);
+        } else {
+            p.setBackorder(true);
+        }
     }
 
     private Product getSelectedProduct() {

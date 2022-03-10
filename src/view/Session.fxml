@@ -25,7 +25,9 @@
                 layoutY="83.0"
                 pickOnBounds="true"
                 preserveRatio="true" />
-        <Pane HBox.hgrow="ALWAYS" /> 
+        <Pane HBox.hgrow="ALWAYS" />
+        <Label fx:id="versionLbl" />
+        <Pane minWidth="10" />  
     </HBox>
     
     <HBox >
@@ -65,14 +67,18 @@
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
         <Button text="Open Order" fx:id="openOrderBtn" disable="true"  onAction="#handleOpenOrderBtn"  />
+        <Pane minWidth="10" />
+        <Button text="Delete Supplier" fx:id="deleteSupplierBtn" disable="true" onAction="#handleDeleteSupplierBtn" /> 
+        <Pane minWidth="10" />
+        <Button text="Add Supplier" fx:id="addSupplierBtn" onAction="#handleAddSupplierBtn" /> 
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
          
     <Pane minHeight="20" /> 
     
-    <HBox >
+    <HBox >              
         <Pane HBox.hgrow="ALWAYS" />  
-        <Button text="Save and Exit" onAction="#handleExit"></Button>
+        <Button text="Save and Exit" onAction="#handleSaveExitBtn"></Button>
         <Pane prefWidth="50"/> 
     </HBox>
     

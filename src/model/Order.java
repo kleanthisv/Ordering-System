@@ -13,13 +13,7 @@ public class Order {
     public Order(){
         this.productList = FXCollections.observableArrayList();
     }
-    
-    public void addAllProducts(ArrayList<Product> products){
-        for(Product s : products){
-            this.addProduct(s); //CHANGE TO MAKE IT SO QUANTITY IS A DIFFERENT VALUE WHEN RECEIVED AS TO WHEN IT IS STORED
-        }
-    }
-    
+        
     public void addProduct(Product product){
         productList.add(product);
     }

@@ -24,7 +24,7 @@
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <TableView prefWidth="700" fx:id="productTv">
+        <TableView prefWidth="720" fx:id="productTv">
             <placeholder> <Label text="No products in order" /> </placeholder>
             <columns>
                 <TableColumn text="Ex?" prefWidth="50" fx:id="exportClm"/>
@@ -51,11 +51,11 @@
         <Pane HBox.hgrow="ALWAYS"  />   
     </HBox>
     
-    <Pane minHeight="20" />
+    <Pane minHeight="10" />
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Select" fx:id="selectBtn" onAction="#handleSelectBtn" disable="true" />
+        <Button text="Select All" fx:id="selectBtn" onAction="#handleSelectBtn" />
         <Pane prefWidth="20" />
         <Button text="Export Selected" onAction="#handleExportSelectedBtn"/>
         <Pane prefWidth="20" />

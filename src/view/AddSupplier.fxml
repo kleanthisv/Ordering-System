@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="200" prefWidth="300" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddSupplierController">
+    <stylesheets>
+        <URL value="@mx5.css"/>
+    </stylesheets>
+    
+    <Pane minHeight="10" />
+        
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Label styleClass="label-h2" text="Add Supplier:" />
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <Pane minHeight="30" />
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <GridPane hgap="5" vgap="5" >
+            <Label text="Supplier Name:"
+                GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="nameTf" prefWidth="150" 
+                GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        </GridPane>
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+         
+    <Pane minHeight="10"/>
+    <Pane VBox.vgrow="ALWAYS" />
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button onAction="#handAddSupplierBtn" text="Add Supplier" />
+        <Pane prefWidth="20" /> 
+        <Button onAction="#handleCloseBtn" text="Close"/>
+        <Pane prefWidth="30" /> 
+    </HBox>
+    
+    <Pane minHeight="30" /> 
+    
+</VBox>

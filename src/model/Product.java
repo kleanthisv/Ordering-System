@@ -6,6 +6,8 @@ package model;
 
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -23,7 +25,7 @@ public class Product {
     public Product(String title, String SKU, int qty){
         // if product exists in supplier.getOrder, then add the qty to the order instead of the whole product.        
         this.SKU = new SimpleStringProperty();
-        this.SKU.set(SKU);
+        this.SKU.set(SKU.trim());
         
         this.quantity = new SimpleIntegerProperty();
         this.quantity.set(qty);

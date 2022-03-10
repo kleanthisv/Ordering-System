@@ -5,6 +5,7 @@ import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.File;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
 
@@ -25,45 +27,60 @@ public class SessionController extends Controller<Session> {
         return model.getSuppliers();
     }
 
+    private String version = "v1.1";
+    
+    @FXML private Label versionLbl;
     @FXML private TextField supplierTf;
     @FXML private ListView suppliersLv;
     @FXML private Label reportDateLbl;
     @FXML private Button openOrderBtn;
+    @FXML private Button deleteSupplierBtn;
+    @FXML private Button addSupplierBtn;
     @FXML private ImageView logo;
 
     @FXML
     private void initialize() {
-        suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> openOrderBtn.setDisable(newAcct == null));
+        
+        suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> {
+            openOrderBtn.setDisable(newAcct == null);
+            deleteSupplierBtn.setDisable(newAcct == null);
+        });
+        
         reportDateLbl.textProperty().bind(model.getReportDate());
         logo.setImage(new Image(SessionController.class.getResourceAsStream("/view/logo.png")));
+        versionLbl.setText(version);
+        
+        //Open supplier on double click
+        suppliersLv.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    try{
+                        openOrder();
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        });
     }
 
     @FXML
-    private void handleExit(ActionEvent event) throws Exception {
-        model.writeSuppliers();
-        for (Supplier s : getList()) {
-            model.writeOrderCSV(s);
-        }
-        this.stage.close();
+    private void handleAddSupplierBtn(ActionEvent event) throws Exception {
+        Stage orderStage = new Stage();
+        ViewLoader.showStage(model, "/view/AddSupplier.fxml", "Add Supplier", orderStage);
     }
-
+    
     @FXML
-    private void handleAddSupplier(ActionEvent event) throws Exception {
-
-        String supplierName = supplierTf.getText();
-
-        if (!model.supplierExists(supplierName) && !supplierName.isEmpty()) {
-            model.getSuppliers().add(new Supplier(supplierName));
-            System.out.println("Supplier " + supplierName + " added to supplier list.");
-        }
-        supplierTf.setText("");
+    private void handleDeleteSupplierBtn(ActionEvent event) throws Exception {
+        Supplier p = getSelectedSupplier();
+        model.getSuppliers().remove(p);
     }
 
     @FXML
     private void handleImportSalesReportBtn(ActionEvent event) throws Exception {
         Stage importStage = new Stage();
-        importStage.setHeight(50);
-        importStage.setWidth(200);
         ViewLoader.showStage(model, "/view/Import.fxml", "Import Sales Report", importStage);
     }
 
@@ -71,12 +88,25 @@ public class SessionController extends Controller<Session> {
     private void handleOpenOrderBtn(ActionEvent event) throws Exception {
         Supplier s = getSelectedSupplier();
         Stage orderStage = new Stage();
-        orderStage.setHeight(50);
-        orderStage.setWidth(200);
         ViewLoader.showStage(s, "/view/Order.fxml", s.getName() + " Order", orderStage);
+    }
+    
+    @FXML
+    private void handleSaveExitBtn(ActionEvent event) throws Exception {
+        model.writeSuppliers();
+        for (Supplier s : getList()) {
+            model.writeOrderCSV(s);
+        }
+        this.stage.close();
     }
 
     private Supplier getSelectedSupplier() {
         return (Supplier) suppliersLv.getSelectionModel().getSelectedItem();
+    }
+    
+    private void openOrder() throws Exception{
+        Supplier s = getSelectedSupplier();
+        Stage orderStage = new Stage();
+        ViewLoader.showStage(s, "/view/Order.fxml", s.getName() + " Order", orderStage);
     }
 }

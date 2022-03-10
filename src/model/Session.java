@@ -123,7 +123,7 @@ public class Session {
                     if (s.replaceAll("[^,]", "").length() == 3) { //check if line has comma in it
                         String[] productArr = s.split(","); //0=title 1=sku 2=quantity
                         String productName = productArr[0];
-                        String productSKU = productArr[1];
+                        String productSKU = productArr[1].trim();
                         int productQty = Integer.parseInt(productArr[2]);
                         Product p = new Product(productName, productSKU, productQty);
                         
@@ -159,7 +159,7 @@ public class Session {
         
     }
     
-    public void importSalesReport(File salesReport) throws Exception{
+    public void importSalesReport(File salesReport) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(salesReport));
         ArrayList<String> lines = new ArrayList<>();
         String line = null;
@@ -167,52 +167,108 @@ public class Session {
             lines.add(line);
         }
         ArrayList<String> invalidProducts = new ArrayList<String>();
-        
-        for(String s : lines){ //split line into product and add to list
-            if(!s.equals("product_title,product_vendor,variant_sku,net_quantity")){
-                if(s.replaceAll("[^,]","").length() == 3){ //check if line has comma in it
+
+        for (String s : lines) { //split line into product and add to list
+            if (!s.equals("product_title,product_vendor,variant_sku,net_quantity")) {
+                if (s.replaceAll("[^,]", "").length() == 3) { //check if line has comma in it
                     String[] productArr = s.split(","); //0=title 1=supplier 2=sku 3=quantity
                     String supplierName = productArr[1].trim();
-                    String productName = productArr[0];
-                    String productSKU = productArr[2];
-                    if(supplierName.contains("/") || supplierName.contains("\\")){
+                    String productName = productArr[0].trim();
+                    String productSKU = productArr[2].trim();
+                    if (supplierName.contains("/") || supplierName.contains("\\")) {
                         supplierName = supplierName.replace("/", "-");
                         supplierName = supplierName.replace("\\", "-");
                     }
                     int productQty = Integer.parseInt(productArr[3]);
-                 
-                    if(!suppliers.hasSupplier(supplierName)){
+
+                    if (!suppliers.hasSupplier(supplierName)) {
                         suppliers.add(new Supplier(supplierName));
                     }
-                    if(!productArr[2].isEmpty()){
-                        try{
-                            //if the product already exists in the order sheet, update the qty instead of adding new product
-                            if(suppliers.getSupplier(supplierName).hasProduct(productSKU)){ 
-                                Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
-                                p.setQty(p.quantityProperty().getValue() + productQty);
-                            }
-                            else{
-                                suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName,productSKU,productQty));
-                            }
-                            
+                    try {
+                        //if the product already exists in the order sheet, update the qty instead of adding new product
+                        if (suppliers.getSupplier(supplierName).hasProduct(productSKU)) {
+                            Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
+                            p.setQty(p.quantityProperty().getValue() + productQty);
+                        } else {
+                            suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
                         }
-                        catch(Exception e){
-                            System.out.println(e.toString() +" when trying to import: " + s);
-                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e.toString() + " when trying to import: " + s);
                     }
-                }
-                else{
+                } else {
                     System.out.println("Error with line " + s);
                     invalidProducts.add(s);
                 }
-                
+
             }
         }
         //show all the invalid products as errors
-        for(String errors: invalidProducts){
+        for (String errors : invalidProducts) {
             Stage errorStage = new Stage();
-            errorStage.setHeight(100);
-            errorStage.setWidth(200);
+            ViewLoader.showStage(new OSError("Error importing product: \n" + errors), "/view/Error.fxml", "ERROR", errorStage);
+        }
+    }
+    
+    public void importOrder(File orderFile) throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(orderFile));
+        ArrayList<String> lines = new ArrayList<>();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
+        }
+        
+        ArrayList<String> invalidProducts = new ArrayList<String>();
+        
+        for (String s : lines) { //split line into product and add to list
+            if (!s.equals("Product Name,SKU,Quantity,Backorder") && s.contains(",")) {
+                
+                if (s.replaceAll("[^,]", "").length() == 3) { //check if line has comma in it
+                    
+                    //declaring different variables
+                    String[] productArr = s.split(","); //0=title 1=sku 2=qty 3=backorder
+                    String supplierName = orderFile.getName().substring(0, orderFile.getName().indexOf("Order")).trim();
+                    String productName = productArr[0].trim();
+                    String productSKU = productArr[1].trim();
+                    int productQty = Integer.parseInt(productArr[2]);
+                    
+                    boolean isBackorder = false;
+                    if(productArr[3].equals("TRUE")){
+                        isBackorder = true;
+                    }
+                    else{
+                        isBackorder = false;
+                    }
+                    
+                    //replace slashes with dashes
+                    if (supplierName.contains("/") || supplierName.contains("\\")) {
+                        supplierName = supplierName.replace("/", "-");
+                        supplierName = supplierName.replace("\\", "-");
+                    }
+
+                    //if the product already exists in the order sheet, update the qty instead of adding new product
+                    try {
+                        if (suppliers.getSupplier(supplierName).hasProduct(productSKU)) {
+                            Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
+                            p.setQty(p.quantityProperty().getValue() + productQty);
+                        } else {
+                            suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
+                            System.out.println(productName + " " + supplierName);
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e.toString() + " when trying to import: " + s);
+                    }
+                } else {
+                    System.out.println("Error with line " + s);
+                    invalidProducts.add(s);
+                }
+
+            }
+        }
+        //show all the invalid products as errors
+        for (String errors : invalidProducts) {
+            Stage errorStage = new Stage();
             ViewLoader.showStage(new OSError("Error importing product: \n" + errors), "/view/Error.fxml", "ERROR", errorStage);
         }
     }
@@ -249,7 +305,7 @@ public class Session {
             orderWriter.write(p.quantityProperty().getValue() + ",");
             orderWriter.write(p.backorderProperty().getValue() + "\n");
         }
-        
+                
         orderWriter.flush();
         orderWriter.close();
     }
