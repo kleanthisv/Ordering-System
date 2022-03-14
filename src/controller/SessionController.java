@@ -4,6 +4,7 @@ import au.edu.uts.ap.javafx.Controller;
 import au.edu.uts.ap.javafx.ViewLoader;
 import java.io.File;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,22 +25,36 @@ public class SessionController extends Controller<Session> {
     }
 
     public final ObservableList<Supplier> getList() {
-        return model.getSuppliers();
+        return model.getSuppliers().getList();
     }
 
-    private String version = "v1.1";
+    private String version = "v1.2";
     
     @FXML private Label versionLbl;
-    @FXML private TextField supplierTf;
+    @FXML private TextField filterTf;
     @FXML private ListView suppliersLv;
     @FXML private Label reportDateLbl;
     @FXML private Button openOrderBtn;
     @FXML private Button deleteSupplierBtn;
     @FXML private Button addSupplierBtn;
     @FXML private ImageView logo;
-
+    
     @FXML
     private void initialize() {
+                
+        FilteredList<Supplier> filteredSuppliers = new FilteredList<>(getList(), s -> true);
+        
+        suppliersLv.setItems(filteredSuppliers);
+        
+        filterTf.textProperty().addListener( obs -> {
+            String filter = filterTf.getText();
+            if(filter == null || filter.length() == 0){
+                filteredSuppliers.setPredicate(s -> true);
+            }
+            else{
+                filteredSuppliers.setPredicate(s -> s.getName().toLowerCase().contains(filter.toLowerCase()));
+            }
+        });
         
         suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> {
             openOrderBtn.setDisable(newAcct == null);
@@ -75,7 +90,7 @@ public class SessionController extends Controller<Session> {
     @FXML
     private void handleDeleteSupplierBtn(ActionEvent event) throws Exception {
         Supplier p = getSelectedSupplier();
-        model.getSuppliers().remove(p);
+        model.getSuppliers().getList().remove(p);
     }
 
     @FXML

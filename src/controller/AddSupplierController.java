@@ -24,10 +24,10 @@ public class AddSupplierController extends Controller<Session> {
     }
     
     @FXML
-    private void handAddSupplierBtn() {
+    private void handleAddSupplierBtn() {
         String supplierName = nameTf.getText();
 
-        if (!model.supplierExists(supplierName) && !supplierName.isEmpty()) {
+        if (model.getSuppliers().getSupplier(supplierName) == null && !supplierName.isEmpty()) {
             model.getSuppliers().add(new Supplier(supplierName));
             System.out.println("Supplier " + supplierName + " added to supplier list.");
         }

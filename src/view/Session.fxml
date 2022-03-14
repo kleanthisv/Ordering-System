@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.*?>
-<?import javafx.scene.image.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox prefHeight="600" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controller.SessionController">
     <stylesheets>
-        <URL value="@mx5.css"/>
+        <URL value="@mx5.css" />
     </stylesheets>
     
     <Pane minHeight="10" /> 
     
     <HBox>
         <Pane HBox.hgrow="ALWAYS" /> 
-        <ImageView
-                fx:id="logo"
-                fitWidth="250.0"
-                layoutX="61.0"
-                layoutY="83.0"
-                pickOnBounds="true"
-                preserveRatio="true" />
+        <ImageView fx:id="logo" fitWidth="250.0" layoutX="61.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
         <Pane HBox.hgrow="ALWAYS" />
         <Label fx:id="versionLbl" />
-        <Pane minWidth="10" />  
     </HBox>
     
-    <HBox >
+    <HBox>
         <Pane HBox.hgrow="ALWAYS" /> 
         <Label styleClass="label-h1" text="Ordering System" />
         <Pane HBox.hgrow="ALWAYS" /> 
@@ -39,25 +34,30 @@
     <Pane minHeight="10" />
     
     
-    <HBox >
+    <HBox>
         <Pane HBox.hgrow="ALWAYS" /> 
         <Label styleClass="label-h2" text="Suppliers List:" />
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
-    <HBox >
-        <Pane HBox.hgrow="ALWAYS"  />
-        <VBox >
-            <Button text="Import Report" onAction="#handleImportSalesReportBtn" />
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS" />
+        <VBox>
+            <Button onAction="#handleImportSalesReportBtn" text="Import Report" />
             <Pane prefHeight="10" /> 
-            <Label styleClass="label-bold" text="Last import date:"/>
-            <Label fx:id="reportDateLbl"  text="date"/>
+            <Label styleClass="label-bold" text="Last import date:" />
+            <Label fx:id="reportDateLbl" text="date" />
         </VBox>
-        <Pane prefWidth="75"   /> 
-        <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" prefWidth="300" prefHeight="500" >
-            <placeholder> <Label text="No Supplier"/> </placeholder>
+        <Pane prefWidth="75" /> 
+        <ListView fx:id="suppliersLv" prefHeight="500" prefWidth="300" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <placeholder> <Label text="No Supplier" /> </placeholder>
         </ListView>
-        <Pane prefWidth="200" />
+        <Pane prefWidth="20" />
+        <TextField fx:id="filterTf" promptText="Filter Supplier">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></TextField>
+        <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
     
@@ -65,23 +65,23 @@
     
     
     <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Open Order" fx:id="openOrderBtn" disable="true"  onAction="#handleOpenOrderBtn"  />
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button fx:id="openOrderBtn" disable="true" onAction="#handleOpenOrderBtn" text="Open Order" />
         <Pane minWidth="10" />
-        <Button text="Delete Supplier" fx:id="deleteSupplierBtn" disable="true" onAction="#handleDeleteSupplierBtn" /> 
+        <Button fx:id="deleteSupplierBtn" disable="true" onAction="#handleDeleteSupplierBtn" text="Delete Supplier" /> 
         <Pane minWidth="10" />
-        <Button text="Add Supplier" fx:id="addSupplierBtn" onAction="#handleAddSupplierBtn" /> 
+        <Button fx:id="addSupplierBtn" onAction="#handleAddSupplierBtn" text="Add Supplier" /> 
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
          
     <Pane minHeight="20" /> 
     
-    <HBox >              
+    <HBox>              
         <Pane HBox.hgrow="ALWAYS" />  
-        <Button text="Save and Exit" onAction="#handleSaveExitBtn"></Button>
-        <Pane prefWidth="50"/> 
+        <Button onAction="#handleSaveExitBtn" text="Save and Exit" />
+        <Pane prefWidth="50" /> 
     </HBox>
     
-    <Pane minHeight="20"  /> 
+    <Pane minHeight="20" /> 
     
 </VBox>

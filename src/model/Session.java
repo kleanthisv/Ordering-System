@@ -41,14 +41,10 @@ public class Session {
         }
     }
     
-    public ObservableList<Supplier> getSuppliers(){
-        return this.suppliers.getSuppliers();
+    public Suppliers getSuppliers(){
+        return this.suppliers;
     }
-    
-    public boolean supplierExists(String name){
-        return this.suppliers.hasSupplier(name);
-    }
-    
+        
     private void importData() throws Exception{
         //create AppData directory
         try{
@@ -98,16 +94,18 @@ public class Session {
     
     private void importSuppliers() throws Exception{
 
-        Scanner supplierSc = new Scanner(suppliersCSV);
-        supplierSc.useDelimiter(",");
-        while(supplierSc.hasNext()){
-            suppliers.add(new Supplier(supplierSc.next()));
+        BufferedReader reader = new BufferedReader(new FileReader(suppliersCSV));
+
+        ArrayList<String> lines = new ArrayList<>();
+        String sName = null;
+        while ((sName = reader.readLine()) != null) {
+            suppliers.getSupplier(sName);
         }
-        supplierSc.close();        
+        reader.close();        
     }
     
     private void importOrders() throws Exception {
-        for (Supplier supplier : suppliers.getSuppliers()) {
+        for (Supplier supplier : suppliers.getList()) {
             String orderPath = ordersDir + "\\" + supplier.getName() + ".csv";
             File orderFile = new File(orderPath);
 
@@ -118,6 +116,8 @@ public class Session {
                 lines.add(line);
             }
 
+            reader.close();
+            
             for (String s : lines) { //split line into product and add to list
                 if (!s.equals("product_title,variant_sku,net_quantity,bo_status")) {
                     if (s.replaceAll("[^,]", "").length() == 3) { //check if line has comma in it
@@ -142,9 +142,10 @@ public class Session {
     public void writeSuppliers() throws Exception{
         FileWriter csvWriter;
         csvWriter = new FileWriter(suppliersCSV,false);
-	for(Supplier s : suppliers.getSuppliersAsArr()) {
-            csvWriter.write(s.toString() + ",");
+	for(Supplier s : suppliers.getList()) {
+            csvWriter.write(s.toString() + "\\n");
 	}
+        
         System.out.println("Suppliers CSV finished writing.");
         csvWriter.flush();
         csvWriter.close();
@@ -180,19 +181,9 @@ public class Session {
                         supplierName = supplierName.replace("\\", "-");
                     }
                     int productQty = Integer.parseInt(productArr[3]);
-
-                    if (!suppliers.hasSupplier(supplierName)) {
-                        suppliers.add(new Supplier(supplierName));
-                    }
+                                        
                     try {
-                        //if the product already exists in the order sheet, update the qty instead of adding new product
-                        if (suppliers.getSupplier(supplierName).hasProduct(productSKU)) {
-                            Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
-                            p.setQty(p.quantityProperty().getValue() + productQty);
-                        } else {
-                            suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
-                        }
-
+                        suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
                     } catch (Exception e) {
                         System.out.println(e.toString() + " when trying to import: " + s);
                     }
@@ -200,7 +191,6 @@ public class Session {
                     System.out.println("Error with line " + s);
                     invalidProducts.add(s);
                 }
-
             }
         }
         //show all the invalid products as errors
@@ -248,14 +238,7 @@ public class Session {
 
                     //if the product already exists in the order sheet, update the qty instead of adding new product
                     try {
-                        if (suppliers.getSupplier(supplierName).hasProduct(productSKU)) {
-                            Product p = suppliers.getSupplier(supplierName).getProduct(productSKU);
-                            p.setQty(p.quantityProperty().getValue() + productQty);
-                        } else {
-                            suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
-                            System.out.println(productName + " " + supplierName);
-                        }
-
+                        suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
                     } catch (Exception e) {
                         System.out.println(e.toString() + " when trying to import: " + s);
                     }

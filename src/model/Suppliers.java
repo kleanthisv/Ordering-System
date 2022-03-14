@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 public class Suppliers {
     
@@ -15,23 +16,8 @@ public class Suppliers {
         suppliers.add(s);
     }
     
-    public final ObservableList<Supplier> getSuppliers(){
+    public final ObservableList<Supplier> getList(){
         return this.suppliers;
-    }
-    
-    public Supplier getSupplier(String sName){
-        for(Supplier s : suppliers){
-            if(s.getName().matches(sName)) return s;
-        }
-        return null;
-    }
-    
-    public ArrayList<Supplier> getSuppliersAsArr(){
-        ArrayList<Supplier> suppliersAL = new ArrayList();
-        for(Supplier s : this.suppliers){
-            suppliersAL.add(s);
-        }
-        return suppliersAL;
     }
     
     public void printSuppliers(){
@@ -43,11 +29,18 @@ public class Suppliers {
         System.out.println(suppliers.size() + " Suppliers total");
     }
     
-    public boolean hasSupplier(String sName){
-        for(Supplier s : suppliers){
-            if(s.getName().matches(sName)) return true;
+    public Supplier getSupplier(String sName){
+        
+        FilteredList<Supplier> filteredList = new FilteredList<>(getList(), s -> s.getName().toLowerCase().equals(sName.toLowerCase()));
+        if(!filteredList.isEmpty() && filteredList.size() == 1){
+            Supplier s = filteredList.get(0);
+            return s;
         }
-        return false;
+        else{
+            Supplier s = new Supplier(sName);
+            this.add(s);
+            return s;
+        }
     }
     
 }

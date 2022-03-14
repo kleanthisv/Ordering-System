@@ -38,7 +38,7 @@
     
     <HBox >
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button onAction="#handAddSupplierBtn" text="Add Supplier" />
+        <Button onAction="#handleAddSupplierBtn" text="Add Supplier" />
         <Pane prefWidth="20" /> 
         <Button onAction="#handleCloseBtn" text="Close"/>
         <Pane prefWidth="30" /> 

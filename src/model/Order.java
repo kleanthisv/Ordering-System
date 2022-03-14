@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 public class Order {
     
@@ -15,20 +16,18 @@ public class Order {
     }
         
     public void addProduct(Product product){
-        productList.add(product);
+        FilteredList<Product> filteredList = new FilteredList<>(getList(), s -> s.SKUProperty().getValue().toLowerCase().equals(product.SKUProperty().getValue().toLowerCase()));
+        if(!filteredList.isEmpty() && filteredList.size() == 1){
+            Product p = filteredList.get(0);
+            p.setQty(p.quantityProperty().getValue() + product.quantityProperty().getValue());
+        }
+        else{
+            productList.add(product);
+        }
     }
     
     public void deleteProduct(Product p){
         productList.remove(p);
-    }
-    
-    private boolean productExists(Product product){
-        for(Product p : productList){
-            if(p.equals(product)){
-                return true;
-            }
-        }
-        return false;
     }
     
     public ObservableList<Product> getList(){

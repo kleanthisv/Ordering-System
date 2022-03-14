@@ -13,17 +13,11 @@ public class Supplier {
         this.name.set(name.trim());
         this.order = new Order();
     }
-    
-    public boolean hasProduct(String SKU){
-        for(Product p : this.order.getList()){
-            if(p.SKUProperty().getValue().matches(SKU)) return true;
-        }
-        return false;
-    }
-    
+        
     public Product getProduct(String SKU){
+        
         for(Product p : this.order.getList()){
-            if(p.SKUProperty().getValue().matches(SKU)) return p;
+            if(p.SKUProperty().getValue().toLowerCase().equals(SKU.toLowerCase())) return p;
         }
         return null;
     }
