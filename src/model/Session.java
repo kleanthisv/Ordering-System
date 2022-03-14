@@ -98,8 +98,22 @@ public class Session {
 
         ArrayList<String> lines = new ArrayList<>();
         String sName = null;
+                
         while ((sName = reader.readLine()) != null) {
-            suppliers.getSupplier(sName);
+            //suppliers.getSupplier(sName);
+            lines.add(sName);
+        }
+        System.out.println(lines.size() + "");
+        if(lines.size() == 1){
+            String[] sList = lines.get(0).split(",");
+            for(String s : sList){
+                suppliers.getSupplier(s);
+            }
+        }
+        else{
+            for(String s : lines){
+                suppliers.getSupplier(s);
+            }
         }
         reader.close();        
     }
@@ -143,7 +157,7 @@ public class Session {
         FileWriter csvWriter;
         csvWriter = new FileWriter(suppliersCSV,false);
 	for(Supplier s : suppliers.getList()) {
-            csvWriter.write(s.toString() + "\\n");
+            csvWriter.write(s.toString() + "\n");
 	}
         
         System.out.println("Suppliers CSV finished writing.");
