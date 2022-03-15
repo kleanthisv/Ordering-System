@@ -1,75 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.*?>
-<?import au.edu.uts.ap.javafx.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" fx:controller="controller.OrderController">
+<VBox prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderController">
     <stylesheets>
-        <URL value="@mx5.css"/>
+        <URL value="@mx5.css" />
     </stylesheets>
     
     <Pane minHeight="10" />
     
     <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Label fx:id="titleLbl" styleClass="label-h2"/>
-        <Pane HBox.hgrow="ALWAYS"  /> 
+        <Pane HBox.hgrow="ALWAYS" />
+        <Label fx:id="titleLbl" styleClass="label-h2" />
+        <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
     <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <TableView prefWidth="720" fx:id="productTv">
-            <placeholder> <Label text="No products in order" /> </placeholder>
-            <columns>
-                <TableColumn text="Ex?" prefWidth="50" fx:id="exportClm"/>
-                <TableColumn fx:id="nameClm" text="Name" prefWidth="300"/> 
-                <TableColumn fx:id="skuClm" text="SKU" prefWidth="200"/> 
-                <TableColumn fx:id="qtyClm" text="Quantity" prefWidth="100"/> 
-                <TableColumn fx:id="backOrderClm" text="B/O?" prefWidth="50" /> 
-            </columns>
-        </TableView>
-        <Pane HBox.hgrow="ALWAYS"  /> 
+        <Pane HBox.hgrow="ALWAYS" />
+        <VBox>
+            <children>
+                <TableView fx:id="productTv" prefWidth="720">
+                    <placeholder> 
+                        <Label text="No products in order" /> 
+                    </placeholder>
+                    <columns>
+                        <TableColumn fx:id="exportClm" prefWidth="50" text="Ex?" />
+                        <TableColumn fx:id="nameClm" prefWidth="332.0" text="Name" /> 
+                        <TableColumn fx:id="skuClm" prefWidth="168.0" text="SKU" /> 
+                        <TableColumn fx:id="qtyClm" prefWidth="100" text="Quantity" /> 
+                        <TableColumn fx:id="backOrderClm" prefWidth="50" text="B/O?" /> 
+                    </columns>
+                </TableView>
+              
+                <Pane minHeight="10" />
+              
+                <HBox>
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Button fx:id="makeBackorderBtn" disable="true" onAction="#handleMakeBackorderBtn" text="Make Backorder" />  
+                    <Pane prefWidth="20" />
+                    <Button fx:id="adjustQtyBtn" disable="true" onAction="#handleAdjustQtyBtn" text="Adjust Quantity" /> 
+                    <Pane prefWidth="20" />
+                    <Button fx:id="deleteProdBtn" disable="true" onAction="#handleDeleteProdBtn" text="Delete Product" /> 
+                    <Pane prefWidth="20" />
+                    <Button onAction="#handleAddProdBtn" text="Add Product" /> 
+                    <Pane HBox.hgrow="ALWAYS" />   
+                </HBox>
+              
+            </children>
+        </VBox>
+        <Pane minWidth="10" />
+        <VBox>
+            <children>
+                <TextField fx:id="filterTf" promptText="Filter by SKU">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </TextField>
+                <Pane VBox.vgrow="ALWAYS" />
+                <TextArea fx:id="notesTa" prefHeight="200.0" prefWidth="200.0" promptText="Product Notes" />
+                <Pane minHeight="10" /> 
+                <HBox>
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Button fx:id="saveNotesBtn" onAction="#handleSaveNotesBtn" text="Save Notes" disable="true"/>
+                    <Pane minWidth="10" />
+                    <Button fx:id="clearNotesBtn" onAction="#handleClearNotesBtn" text="Clear Notes" disable="true"/>
+                    <Pane HBox.hgrow="ALWAYS" />
+                </HBox>
+            </children>
+        </VBox>
+        <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
     
     <Pane minHeight="10" /> 
     
     <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button fx:id="makeBackorderBtn" text="Make Backorder" disable="true" onAction="#handleMakeBackorderBtn"/>  
-        <Pane prefWidth="20" />
-        <Button fx:id="adjustQtyBtn" text="Adjust Quantity" disable="true" onAction="#handleAdjustQtyBtn"/> 
-        <Pane prefWidth="20" />
-        <Button fx:id="deleteProdBtn" text="Delete Product" disable="true" onAction="#handleDeleteProdBtn"/> 
-        <Pane prefWidth="20" />
-        <Button text="Add Product" onAction="#handleAddProdBtn"/> 
-        <Pane HBox.hgrow="ALWAYS"  />   
-    </HBox>
-    
-    <Pane minHeight="10" />
-    
-    <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Select All" fx:id="selectBtn" onAction="#handleSelectBtn" />
-        <Pane prefWidth="20" />
-        <Button text="Export Selected" onAction="#handleExportSelectedBtn"/>
-        <Pane prefWidth="20" />
-        <Button text="Export All" onAction="#handleExportAllBtn"/>
-        <Pane HBox.hgrow="ALWAYS"  />
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button fx:id="selectBtn" onAction="#handleSelectBtn" text="Select All" />
+        <Pane minWidth="10" />
+        <Button onAction="#handleExportSelectedBtn" text="Export Selected" />
+        <Pane minWidth="10" />
+        <Button onAction="#handleExportAllBtn" text="Export All" />
+        <Pane HBox.hgrow="ALWAYS" />
     </HBox>     
     
-    <Pane VBox.vgrow="ALWAYS"/> 
+    <Pane VBox.vgrow="ALWAYS" /> 
     
     <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Exit" onAction="#handleCloseBtn"/>  
+        <Pane HBox.hgrow="ALWAYS" />
+        <Button onAction="#handleCloseBtn" text="Exit" />  
         <Pane prefWidth="20" />
-        <Button text="Save and Exit" onAction="#handleSaveExitBtn"/> 
+        <Button onAction="#handleSaveExitBtn" text="Save and Exit" /> 
         <Pane prefWidth="50" />  
     </HBox>
     

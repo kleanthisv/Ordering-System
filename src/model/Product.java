@@ -21,6 +21,7 @@ public class Product {
     private StringProperty title;
     private BooleanProperty export;
     private BooleanProperty isBackorder;
+    private StringProperty notes;
     
     public Product(String title, String SKU, int qty){
         // if product exists in supplier.getOrder, then add the qty to the order instead of the whole product.        
@@ -38,6 +39,9 @@ public class Product {
         
         this.export = new SimpleBooleanProperty();
         this.export.set(false);
+        
+        this.notes = new SimpleStringProperty();
+        this.notes.set("");
     }
     
     public ObservableValue<Integer> quantityProperty(){
@@ -52,12 +56,20 @@ public class Product {
         return this.SKU;
     }
     
+    public StringProperty notesProperty(){
+        return this.notes;
+    }
+    
     public BooleanProperty backorderProperty(){
         return this.isBackorder;
     }
     
     public BooleanProperty exportProperty(){
         return this.export;
+    }
+    
+    public void setNotes(String s){
+        this.notes.set(s);
     }
     
     public void setBackorder(boolean b){

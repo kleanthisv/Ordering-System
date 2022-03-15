@@ -28,7 +28,7 @@ public class SessionController extends Controller<Session> {
         return model.getSuppliers().getList();
     }
 
-    private String version = "v1.2";
+    private String version = "v1.3";
     
     @FXML private Label versionLbl;
     @FXML private TextField filterTf;

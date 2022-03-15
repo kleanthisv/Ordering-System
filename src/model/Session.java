@@ -103,7 +103,7 @@ public class Session {
             //suppliers.getSupplier(sName);
             lines.add(sName);
         }
-        System.out.println(lines.size() + "");
+        
         if(lines.size() == 1){
             String[] sList = lines.get(0).split(",");
             for(String s : sList){
@@ -190,19 +190,23 @@ public class Session {
                     String supplierName = productArr[1].trim();
                     String productName = productArr[0].trim();
                     String productSKU = productArr[2].trim();
+                    int productQty = Integer.parseInt(productArr[3]);
+                    
                     if (supplierName.contains("/") || supplierName.contains("\\")) {
                         supplierName = supplierName.replace("/", "-");
                         supplierName = supplierName.replace("\\", "-");
                     }
-                    int productQty = Integer.parseInt(productArr[3]);
+                    if(supplierName.isEmpty()){
+                        supplierName = "Custom Line";
+                    }                    
                                         
                     try {
                         suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
                     } catch (Exception e) {
                         System.out.println(e.toString() + " when trying to import: " + s);
+                       
                     }
                 } else {
-                    System.out.println("Error with line " + s);
                     invalidProducts.add(s);
                 }
             }

@@ -6,6 +6,7 @@ import java.io.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ public class OrderController extends Controller<Supplier>{
    public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
    private boolean allSelected;
+   private boolean somethingSelected;
    final Clipboard clipboard = Clipboard.getSystemClipboard();
    final ClipboardContent content = new ClipboardContent();
    
@@ -46,64 +48,90 @@ public class OrderController extends Controller<Supplier>{
    @FXML Button adjustQtyBtn;
    @FXML Button deleteProdBtn;
    @FXML Button selectBtn;
+   @FXML Button saveNotesBtn;
+   @FXML Button clearNotesBtn;
    
+      
+   @FXML TextField filterTf;
+   @FXML TextArea notesTa;
    
    @FXML
-   private void initialize(){
-       allSelected = false;
-       
-       stage.getIcons().add(new Image(OrderController.class.getResourceAsStream("/view/icon.png")));
-       
-       this.getList().forEach(p -> tempList.add(p));
-       productTv.setItems(tempList);
-       
-       titleLbl.setText(model.getName() + " Order");
-       
-       productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
+    private void initialize() {
+        allSelected = false;
+
+        stage.getIcons().add(new Image(OrderController.class.getResourceAsStream("/view/icon.png")));
+
+        this.getList().forEach(p -> tempList.add(p));
+        
+        FilteredList<Product> filteredProducts = new FilteredList<>(tempList, s -> true);
+        
+        productTv.setItems(filteredProducts);
+
+        filterTf.textProperty().addListener( obs -> {
+            String filter = filterTf.getText();
+            if(filter == null || filter.length() == 0){
+                filteredProducts.setPredicate(s -> true);
+            }
+            else{
+                filteredProducts.setPredicate(s -> s.SKUProperty().getValue().toLowerCase().contains(filter.toLowerCase()));
+            }
+        });
+        
+        
+        titleLbl.setText(model.getName() + " Order");
+
+        productTv.getSelectionModel().selectedItemProperty().addListener((o, oldProd, newProd) -> {
             makeBackorderBtn.setDisable(newProd == null);
             adjustQtyBtn.setDisable(newProd == null);
             deleteProdBtn.setDisable(newProd == null);
-       });
-       
-       nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-       skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
-       qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
-       
-       
-       backOrderClm.setCellValueFactory(cellData -> cellData.getValue().backorderProperty());
-       backOrderClm.setCellFactory( tc -> new CheckBoxTableCell<>());
-       
-       exportClm.setCellValueFactory(cellData -> cellData.getValue().exportProperty());
-       exportClm.setCellFactory( tc -> new CheckBoxTableCell<>());
-       
-       //ON KEYPRESS
-       productTv.setOnKeyPressed(e -> {
-           //MAKE BACKORDER IF KEYPRESS IS B
-           if (e.getCode() == KeyCode.B) {
-               try {
-                   makeBackorder();
-               } catch (Exception ex) {
-                   System.out.println(ex);
-               }
-           }
+            saveNotesBtn.setDisable(newProd == null);
+            clearNotesBtn.setDisable(newProd == null);
+            
+            if(newProd != null){
+                notesTa.setText(newProd.notesProperty().getValue());
+            }
+        });
 
-           //SELECT IF KEYPRESS IS S
-           if (e.getCode() == KeyCode.S) {
-               try {
-                   selectItem();
-               } catch (Exception ex) {
-                   System.out.println(ex);
-               }
-           }
-           //COPY SKU IF KEYPRESS IS C
-           if (e.getCode() == KeyCode.C) {
-               try {
-                   content.putString(getSelectedProduct().SKUProperty().getValue());
-                   clipboard.setContent(content);
-               } catch (Exception ex) {
-                   System.out.println(ex);
-               }
-           }
+        nameClm.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        skuClm.setCellValueFactory(cellData -> cellData.getValue().SKUProperty());
+        qtyClm.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
+
+        backOrderClm.setCellValueFactory(cellData -> cellData.getValue().backorderProperty());
+        backOrderClm.setCellFactory(tc -> new CheckBoxTableCell<>());
+
+        exportClm.setCellValueFactory(cellData -> cellData.getValue().exportProperty());
+        exportClm.setCellFactory(tc -> new CheckBoxTableCell<>());
+
+        //ON KEYPRESS
+        productTv.setOnKeyPressed(e -> {
+            //MAKE BACKORDER IF KEYPRESS IS B
+            if (!productTv.getSelectionModel().isEmpty()) {
+                if (e.getCode() == KeyCode.B) {
+                    try {
+                        makeBackorder();
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+                }
+
+                //SELECT IF KEYPRESS IS S
+                if (e.getCode() == KeyCode.S) {
+                    try {
+                        selectItem();
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+                }
+                //COPY SKU IF KEYPRESS IS C
+                if (e.getCode() == KeyCode.C) {
+                    try {
+                        content.putString(getSelectedProduct().SKUProperty().getValue());
+                        clipboard.setContent(content);
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }           
        });
 
        //SELECT ON DOUBLE CLICK
@@ -120,8 +148,7 @@ public class OrderController extends Controller<Supplier>{
                     }
                 }
             }
-        });
-       
+        });       
    }
 
     @FXML void handleAddProdBtn(ActionEvent event) throws Exception{
@@ -189,7 +216,7 @@ public class OrderController extends Controller<Supplier>{
             
 
             FileChooser fileChooser = new FileChooser();
-
+            
             //Set extension filter for text files
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV", "*.csv");
             fileChooser.getExtensionFilters().add(extFilter);
@@ -246,6 +273,17 @@ public class OrderController extends Controller<Supplier>{
            System.out.println(e.toString());
            System.out.println("Error writing order.");
        }
+   }
+   
+   @FXML
+   private void handleSaveNotesBtn(ActionEvent event){
+       Product p = getSelectedProduct();
+       p.setNotes(notesTa.getText());
+   }
+   
+   @FXML
+   private void handleClearNotesBtn(ActionEvent event){
+       notesTa.setText("");
    }
    
     private void exportOrder(ObservableList<Product> list, File f) throws Exception{
