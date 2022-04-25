@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="250.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImportController">
+    <stylesheets>
+        <URL value="@mx5.css"/>
+    </stylesheets>
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h2" text="Sales Report Selection" underline="true" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+    
+    <Pane prefHeight="50" /> 
+    
+    
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" minWidth="50"  />
+        <GridPane >
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Current Selection:" styleClass="label-bold" />
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="salesReportLbl" /> 
+        </GridPane>
+        <Pane HBox.hgrow="ALWAYS" minWidth="50"  />   
+    </HBox>
+    
+    <Pane VBox.vgrow="ALWAYS"/> 
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button GridPane.columnIndex="1" GridPane.rowIndex="0"   text="Select Sales Report" onAction="#handleSelectBtn" />
+        <Pane prefWidth="20" />
+        <Button text="Import Selected Report" onAction="#handleImportBtn" />
+        <Pane HBox.hgrow="ALWAYS"/>
+    </HBox>
+    
+    <Pane prefHeight="10" />
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Close" onAction="#handleCloseBtn" />
+        <Pane minWidth="20" /> 
+    </HBox>
+    
+    <Pane minHeight="20"  />        
+    
+</VBox>

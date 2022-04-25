@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+
+<VBox prefHeight="750" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+    <stylesheets>
+        <URL value="@mx5.css"/>
+    </stylesheets>
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h1" text="MX5 Mania Ordering System" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+    
+    <Pane prefHeight="50" />
+    
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" /> 
+        <Label styleClass="label-h2" text="Suppliers List:" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS"  />
+        <VBox >
+            <Button text="Import Report" onAction="#handleImportSalesReportBtn" />
+            <Pane prefHeight="10" /> 
+            <Label styleClass="label-bold" text="Last import date:"/>
+            <Label fx:id="reportDateLbl"  text="date"/>
+        </VBox>
+        <Pane prefWidth="75"   /> 
+        <ListView fx:id="suppliersLv" items="${controller.List}" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" prefWidth="300" prefHeight="500" >
+            <placeholder> <Label text="No Supplier"/> </placeholder>
+        </ListView>
+        <Pane prefWidth="200" />
+    </HBox>
+    
+    
+    <Pane prefHeight="60" />
+    
+    
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Open Order" fx:id="openOrderBtn" disable="true"  onAction="#handleOpenOrderBtn"  />
+        <Pane prefWidth="20"/>
+        <Button text="Button 3" />
+        <Pane HBox.hgrow="ALWAYS" /> 
+    </HBox>
+         
+    <Pane minHeight="20" /> 
+    
+    <HBox >
+        <Pane HBox.hgrow="ALWAYS" />  
+        <Button text="Save and Exit" onAction="#handleExit"></Button>
+        <Pane prefWidth="50"/> 
+    </HBox>
+    
+    <Pane minHeight="20"  /> 
+    
+</VBox>

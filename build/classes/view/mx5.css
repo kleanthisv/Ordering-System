@@ -1,0 +1,26 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.label-h1{
+    -fx-font-size: 25pt;
+    -fx-font-weight: bold;
+}
+
+.label-h2{
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+}
+
+.label-bold{
+    -fx-font-weight: bold;
+}
+
+.label-error{
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
+
+.mainFxmlClass {
+
+}
