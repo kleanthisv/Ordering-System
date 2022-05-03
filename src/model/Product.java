@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
  */
 public class Product {
     
-    private Supplier supplier;
     private IntegerProperty quantity;
     private StringProperty SKU;
     private StringProperty title;
@@ -72,6 +71,7 @@ public class Product {
         this.notes.set(s);
     }
     
+        
     public void setBackorder(boolean b){
         this.isBackorder.set(b);
     }

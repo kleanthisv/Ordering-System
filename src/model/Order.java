@@ -16,14 +16,20 @@ public class Order {
     }
         
     public void addProduct(Product product){
-        FilteredList<Product> filteredList = new FilteredList<>(getList(), s -> s.SKUProperty().getValue().toLowerCase().equals(product.SKUProperty().getValue().toLowerCase()));
-        if(!filteredList.isEmpty() && filteredList.size() == 1){
-            Product p = filteredList.get(0);
-            p.setQty(p.quantityProperty().getValue() + product.quantityProperty().getValue());
+        if(product.SKUProperty().getValue().length() != 0){
+            FilteredList<Product> filteredList = new FilteredList<>(getList(), s -> s.SKUProperty().getValue().toLowerCase().equals(product.SKUProperty().getValue().toLowerCase()));
+            if(!filteredList.isEmpty() && filteredList.size() == 1){
+                Product p = filteredList.get(0);
+                p.setQty(p.quantityProperty().getValue() + product.quantityProperty().getValue());
+            }
+            else{
+                productList.add(product);
+            }
         }
         else{
             productList.add(product);
         }
+        
     }
     
     public void deleteProduct(Product p){

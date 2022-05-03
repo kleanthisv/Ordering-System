@@ -47,11 +47,13 @@
                 <HBox>
                     <Pane HBox.hgrow="ALWAYS" />
                     <Button fx:id="makeBackorderBtn" disable="true" onAction="#handleMakeBackorderBtn" text="Make Backorder" />  
-                    <Pane prefWidth="20" />
+                    <Pane minWidth="10" />
                     <Button fx:id="adjustQtyBtn" disable="true" onAction="#handleAdjustQtyBtn" text="Adjust Quantity" /> 
-                    <Pane prefWidth="20" />
+                    <Pane minWidth="10" />
                     <Button fx:id="deleteProdBtn" disable="true" onAction="#handleDeleteProdBtn" text="Delete Product" /> 
-                    <Pane prefWidth="20" />
+                    <Pane minWidth="10" />
+                    <Button fx:id="changeSupplierBtn" disable="true" onAction="#handleChangeSupplierBtn" text="Change Supplier" /> 
+                    <Pane minWidth="10" />
                     <Button onAction="#handleAddProdBtn" text="Add Product" /> 
                     <Pane HBox.hgrow="ALWAYS" />   
                 </HBox>

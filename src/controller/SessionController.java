@@ -28,7 +28,7 @@ public class SessionController extends Controller<Session> {
         return model.getSuppliers().getList();
     }
 
-    private String version = "v1.3";
+    private String version = "v1.3.2";
     
     @FXML private Label versionLbl;
     @FXML private TextField filterTf;
@@ -104,6 +104,14 @@ public class SessionController extends Controller<Session> {
         Supplier s = getSelectedSupplier();
         Stage orderStage = new Stage();
         ViewLoader.showStage(s, "/view/Order.fxml", s.getName() + " Order", orderStage);
+    }
+    
+    @FXML
+    private void handleSaveBtn(ActionEvent event) throws Exception {
+        model.writeSuppliers();
+        for(Supplier s : getList()){
+            model.writeOrderCSV(s);
+        }
     }
     
     @FXML

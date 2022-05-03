@@ -28,7 +28,7 @@
     <HBox>
         <Pane HBox.hgrow="ALWAYS" /> 
         <Label styleClass="label-h1" text="Ordering System" />
-        <Pane HBox.hgrow="ALWAYS" /> 
+        <Pane HBox.hgrow="ALWAYS" />
     </HBox>
     
     <Pane minHeight="10" />
@@ -37,7 +37,7 @@
     <HBox>
         <Pane HBox.hgrow="ALWAYS" /> 
         <Label styleClass="label-h2" text="Suppliers List:" />
-        <Pane HBox.hgrow="ALWAYS" /> 
+        <Pane HBox.hgrow="ALWAYS" />
     </HBox>
     
     <HBox>
@@ -78,6 +78,8 @@
     
     <HBox>              
         <Pane HBox.hgrow="ALWAYS" />  
+        <Button onAction="#handleSaveBtn" text="Save" />
+        <Pane prefWidth="10" /> 
         <Button onAction="#handleSaveExitBtn" text="Save and Exit" />
         <Pane prefWidth="50" /> 
     </HBox>

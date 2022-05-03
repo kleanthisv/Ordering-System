@@ -30,7 +30,6 @@ public class OrderController extends Controller<Supplier>{
    public final ObservableList<Product> getList() { return model.getOrder().getList(); }
    
    private boolean allSelected;
-   private boolean somethingSelected;
    final Clipboard clipboard = Clipboard.getSystemClipboard();
    final ClipboardContent content = new ClipboardContent();
    
@@ -50,6 +49,7 @@ public class OrderController extends Controller<Supplier>{
    @FXML Button selectBtn;
    @FXML Button saveNotesBtn;
    @FXML Button clearNotesBtn;
+   @FXML Button changeSupplierBtn;
    
       
    @FXML TextField filterTf;
@@ -75,8 +75,7 @@ public class OrderController extends Controller<Supplier>{
             else{
                 filteredProducts.setPredicate(s -> s.SKUProperty().getValue().toLowerCase().contains(filter.toLowerCase()));
             }
-        });
-        
+        });        
         
         titleLbl.setText(model.getName() + " Order");
 
@@ -86,6 +85,7 @@ public class OrderController extends Controller<Supplier>{
             deleteProdBtn.setDisable(newProd == null);
             saveNotesBtn.setDisable(newProd == null);
             clearNotesBtn.setDisable(newProd == null);
+            //changeSupplierBtn.setDisable(newProd == null); KEEP DISABLED CAUSE NOT WORKING
             
             if(newProd != null){
                 notesTa.setText(newProd.notesProperty().getValue());
@@ -150,6 +150,19 @@ public class OrderController extends Controller<Supplier>{
             }
         });       
    }
+    
+    @FXML void handleChangeSupplierBtn(ActionEvent event) throws Exception{
+        Product prod = getSelectedProduct();
+        Stage changeStage = new Stage();
+        changeStage.setOnHiding(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                tempList.clear();
+                getList().remove(prod);
+                model.getOrder().getList().forEach(p -> tempList.add(p));                
+            }
+        });
+        ViewLoader.showStage(prod, "/view/ChangeSupplier.fxml", "Change Supplier", changeStage);
+    }
 
     @FXML void handleAddProdBtn(ActionEvent event) throws Exception{
         Stage addStage = new Stage();
