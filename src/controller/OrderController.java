@@ -287,6 +287,17 @@ public class OrderController extends Controller<Supplier>{
            System.out.println("Error writing order.");
        }
    }
+   @FXML
+   private void handleSaveBtn(ActionEvent event){
+       try{
+           this.getList().clear();
+           this.tempList.forEach(p -> this.getList().add(p));
+       }
+       catch(Exception e){
+           System.out.println(e.toString());
+           System.out.println("Error writing order.");
+       }
+   }
    
    @FXML
    private void handleSaveNotesBtn(ActionEvent event){

@@ -101,7 +101,7 @@
         <Pane HBox.hgrow="ALWAYS" />
         <Button onAction="#handleCloseBtn" text="Exit" />  
         <Pane prefWidth="20" />
-        <Button onAction="#handleSaveExitBtn" text="Save and Exit" /> 
+        <Button onAction="#handleSaveBtn" text="Save" prefWidth="100" /> 
         <Pane prefWidth="50" />  
     </HBox>
     
