@@ -65,14 +65,16 @@ public class OrderController extends Controller<Supplier>{
         
         FilteredList<Product> filteredProducts = new FilteredList<>(tempList, s -> true);
         
-        productTv.setItems(filteredProducts);
+        productTv.setItems(tempList);
 
         filterTf.textProperty().addListener( obs -> {
             String filter = filterTf.getText();
             if(filter == null || filter.length() == 0){
                 filteredProducts.setPredicate(s -> true);
+                productTv.setItems(tempList);
             }
             else{
+                productTv.setItems(filteredProducts);
                 filteredProducts.setPredicate(s -> s.SKUProperty().getValue().toLowerCase().contains(filter.toLowerCase()));
             }
         });        
