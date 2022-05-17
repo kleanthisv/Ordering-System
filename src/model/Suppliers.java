@@ -30,17 +30,17 @@ public class Suppliers {
     }
     
     public Supplier getSupplier(String sName){
-        
         FilteredList<Supplier> filteredList = new FilteredList<>(getList(), s -> s.getName().toLowerCase().equals(sName.toLowerCase()));
         if(!filteredList.isEmpty() && filteredList.size() == 1){
             Supplier s = filteredList.get(0);
             return s;
         }
-        else{
-            Supplier s = new Supplier(sName);
-            this.add(s);
-            return s;
-        }
+        
+        return null;
+    }
+
+    void addSupplier(Supplier supplier) {
+        this.add(supplier);
     }
     
 }

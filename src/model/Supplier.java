@@ -7,11 +7,14 @@ public class Supplier {
     
     private Order order;
     private StringProperty name;
+    private BooleanProperty isDone;
     
-    public Supplier(String name){
+    public Supplier(String name, boolean done){
         this.name = new SimpleStringProperty();
         this.name.set(name.trim());
         this.order = new Order();
+        this.isDone = new SimpleBooleanProperty();
+        this.isDone.set(done);
     }
         
     public Product getProduct(String SKU){
@@ -30,13 +33,21 @@ public class Supplier {
         return this.name;
     }
     
+    public BooleanProperty doneProperty(){
+        return this.isDone;
+    }
+    
+    public boolean isDone(){
+        return this.isDone.getValue();
+    }
+    
     public String getName(){
         return this.name.getValue();
     }
     
     @Override
     public String toString(){
-        return this.getName();
+        return this.getName() + "," + this.isDone();
     }
     
 }

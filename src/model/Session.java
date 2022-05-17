@@ -97,24 +97,23 @@ public class Session {
         BufferedReader reader = new BufferedReader(new FileReader(suppliersCSV));
 
         ArrayList<String> lines = new ArrayList<>();
-        String sName = null;
+        String line = null;
+        boolean isDone = false;
                 
-        while ((sName = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             //suppliers.getSupplier(sName);
-            lines.add(sName);
+            lines.add(line);
         }
-        
-        if(lines.size() == 1){
-            String[] sList = lines.get(0).split(",");
-            for(String s : sList){
-                suppliers.getSupplier(s);
+
+        for (String s : lines) {
+            String[] supplier = s.split(",");
+            System.out.println(supplier[0]);
+            System.out.println(supplier[1]);
+            if(suppliers.getSupplier(supplier[0]) == null){
+                suppliers.addSupplier(new Supplier(supplier[0],Boolean.parseBoolean(supplier[1])));
             }
         }
-        else{
-            for(String s : lines){
-                suppliers.getSupplier(s);
-            }
-        }
+
         reader.close();        
     }
     
@@ -202,9 +201,11 @@ public class Session {
                                         
                     try {
                         suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
-                    } catch (Exception e) {
-                        System.out.println(e.toString() + " when trying to import: " + s);
-                       
+                    } catch (NullPointerException e) {
+                        System.out.println("Supplier not found, adding supplier");
+                        if (suppliers.getSupplier(supplierName) == null) {
+                            suppliers.addSupplier(new Supplier(supplierName, false));
+                        }
                     }
                 } else {
                     invalidProducts.add(s);
@@ -258,10 +259,9 @@ public class Session {
                     try {
                         suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
                     } catch (Exception e) {
-                        System.out.println(e.toString() + " when trying to import: " + s);
+                        
                     }
                 } else {
-                    System.out.println("Error with line " + s);
                     invalidProducts.add(s);
                 }
 

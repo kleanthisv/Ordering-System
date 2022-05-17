@@ -28,7 +28,7 @@ public class AddSupplierController extends Controller<Session> {
         String supplierName = nameTf.getText();
 
         if (model.getSuppliers().getSupplier(supplierName) == null && !supplierName.isEmpty()) {
-            model.getSuppliers().add(new Supplier(supplierName));
+            model.getSuppliers().add(new Supplier(supplierName,false));
             System.out.println("Supplier " + supplierName + " added to supplier list.");
         }
         stage.close();

@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,9 +32,13 @@ public class SessionController extends Controller<Session> {
 
     private String version = "v1.3.4";
     
+    @FXML TableColumn<Supplier, Boolean> doneClm;
+    @FXML TableColumn<Supplier, String> titleClm;
+    
     @FXML private Label versionLbl;
     @FXML private TextField filterTf;
     @FXML private ListView suppliersLv;
+    @FXML private TableView suppliersTv;
     @FXML private Label reportDateLbl;
     @FXML private Button openOrderBtn;
     @FXML private Button deleteSupplierBtn;
@@ -44,7 +50,10 @@ public class SessionController extends Controller<Session> {
                 
         FilteredList<Supplier> filteredSuppliers = new FilteredList<>(getList(), s -> true);
         
-        suppliersLv.setItems(filteredSuppliers);
+        suppliersTv.setItems(filteredSuppliers);
+        
+        titleClm.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        doneClm.setCellValueFactory(cellData -> cellData.getValue().doneProperty());
         
         filterTf.textProperty().addListener( obs -> {
             String filter = filterTf.getText();
@@ -56,7 +65,7 @@ public class SessionController extends Controller<Session> {
             }
         });
         
-        suppliersLv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> {
+        suppliersTv.getSelectionModel().selectedItemProperty().addListener((o, oldAcct, newAcct) -> {
             openOrderBtn.setDisable(newAcct == null);
             deleteSupplierBtn.setDisable(newAcct == null);
         });
@@ -66,7 +75,7 @@ public class SessionController extends Controller<Session> {
         versionLbl.setText(version);
         
         //Open supplier on double click
-        suppliersLv.setOnMousePressed(new EventHandler<MouseEvent>() {
+        suppliersTv.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -124,7 +133,7 @@ public class SessionController extends Controller<Session> {
     }
 
     private Supplier getSelectedSupplier() {
-        return (Supplier) suppliersLv.getSelectionModel().getSelectedItem();
+        return (Supplier) suppliersTv.getSelectionModel().getSelectedItem();
     }
     
     private void openOrder() throws Exception{
