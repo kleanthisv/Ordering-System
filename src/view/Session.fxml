@@ -57,7 +57,7 @@
                 <Label text="No Suppliers" />
             </placeholder>
             <columns>
-                <TableColumn fx:id="titleClm" prefWidth="300" text="Supplier Name" />
+                <TableColumn fx:id="titleClm" prefWidth="330" text="Supplier Name" />
                 <TableColumn fx:id="doneClm" prefWidth="50" text="Done?" /> 
             </columns>
         </TableView>
@@ -80,6 +80,8 @@
         <Button fx:id="deleteSupplierBtn" disable="true" onAction="#handleDeleteSupplierBtn" text="Delete Supplier" /> 
         <Pane minWidth="10" />
         <Button fx:id="addSupplierBtn" onAction="#handleAddSupplierBtn" text="Add Supplier" /> 
+        <Pane minWidth="10" />
+        <Button fx:id="doneBtn" disable="true" onAction="#handleDoneBtn" text="Toggle Done" /> 
         <Pane HBox.hgrow="ALWAYS" /> 
     </HBox>
          

@@ -3,7 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/OrderController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/SessionController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/ImportController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Supplier.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/controller/AddSupplierController.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Session.java</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Order.fxml</file>
             <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/view/Session.fxml</file>
+            <file>file:/C:/Users/klean/OneDrive/Documents/GitHub/Ordering-System/src/model/Suppliers.java</file>
         </group>
     </open-files>
 </project-private>

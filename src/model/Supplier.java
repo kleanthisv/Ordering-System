@@ -37,6 +37,10 @@ public class Supplier {
         return this.isDone;
     }
     
+    public void setDone(boolean bool){
+        this.isDone.set(bool);
+    }
+    
     public boolean isDone(){
         return this.isDone.getValue();
     }

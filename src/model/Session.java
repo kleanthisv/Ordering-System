@@ -107,8 +107,6 @@ public class Session {
 
         for (String s : lines) {
             String[] supplier = s.split(",");
-            System.out.println(supplier[0]);
-            System.out.println(supplier[1]);
             if(suppliers.getSupplier(supplier[0]) == null){
                 suppliers.addSupplier(new Supplier(supplier[0],Boolean.parseBoolean(supplier[1])));
             }
@@ -201,6 +199,7 @@ public class Session {
                                         
                     try {
                         suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
+                        suppliers.getSupplier(supplierName).setDone(false);
                     } catch (NullPointerException e) {
                         System.out.println("Supplier not found, adding supplier");
                         if (suppliers.getSupplier(supplierName) == null) {
@@ -258,8 +257,12 @@ public class Session {
                     //if the product already exists in the order sheet, update the qty instead of adding new product
                     try {
                         suppliers.getSupplier(supplierName).getOrder().addProduct(new Product(productName, productSKU, productQty));
-                    } catch (Exception e) {
-                        
+                        suppliers.getSupplier(supplierName).setDone(false);
+                    } catch (NullPointerException e) {
+                        System.out.println("Supplier not found, adding supplier");
+                        if (suppliers.getSupplier(supplierName) == null) {
+                            suppliers.addSupplier(new Supplier(supplierName, false));
+                        }
                     }
                 } else {
                     invalidProducts.add(s);
