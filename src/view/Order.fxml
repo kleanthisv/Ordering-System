@@ -102,7 +102,7 @@
         <Button onAction="#handleCloseBtn" text="Exit" />  
         <Pane prefWidth="20" />
         <Button onAction="#handleSaveBtn" text="Save" prefWidth="100" /> 
-        <Pane prefWidth="50" />  
+        <Pane prefWidth="20" />  
     </HBox>
     
     <Pane minHeight="20" /> 

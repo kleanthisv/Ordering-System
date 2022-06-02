@@ -119,8 +119,9 @@ public class SessionController extends Controller<Session> {
     
     @FXML
     private void handleDeleteSupplierBtn(ActionEvent event) throws Exception {
-        Supplier p = getSelectedSupplier();
-        model.getSuppliers().getList().remove(p);
+        Supplier s = getSelectedSupplier();
+        tempList.remove(s);
+        suppliersTv.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -139,7 +140,7 @@ public class SessionController extends Controller<Session> {
     @FXML
     private void handleSaveBtn(ActionEvent event) throws Exception {
         model.writeSuppliers();
-        for(Supplier s : getList()){
+        for(Supplier s : tempList){
             model.writeOrderCSV(s);
         }
     }
@@ -147,7 +148,7 @@ public class SessionController extends Controller<Session> {
     @FXML
     private void handleSaveExitBtn(ActionEvent event) throws Exception {
         model.writeSuppliers();
-        for (Supplier s : getList()) {
+        for (Supplier s : tempList) {
             model.writeOrderCSV(s);
         }
         this.stage.close();
