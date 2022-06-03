@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.*;
 
 public class SessionController extends Controller<Session> {
@@ -32,7 +33,7 @@ public class SessionController extends Controller<Session> {
         return model.getSuppliers().getList();
     }
 
-    private String version = "v1.4";
+    private String version = "v1.4.2";
     
     @FXML ObservableList<Supplier> tempList = FXCollections.observableArrayList();
     
@@ -113,14 +114,21 @@ public class SessionController extends Controller<Session> {
 
     @FXML
     private void handleAddSupplierBtn(ActionEvent event) throws Exception {
-        Stage orderStage = new Stage();
-        ViewLoader.showStage(model, "/view/AddSupplier.fxml", "Add Supplier", orderStage);
+        Stage addSupplierStage = new Stage();
+        addSupplierStage.setOnHiding(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                tempList.clear();
+                getList().forEach(s -> tempList.add(s));
+            }
+        });
+        ViewLoader.showStage(model, "/view/AddSupplier.fxml", "Add Supplier", addSupplierStage);
     }
     
     @FXML
     private void handleDeleteSupplierBtn(ActionEvent event) throws Exception {
         Supplier s = getSelectedSupplier();
         tempList.remove(s);
+        getList().remove(s);
         suppliersTv.getSelectionModel().clearSelection();
     }
 
@@ -139,6 +147,7 @@ public class SessionController extends Controller<Session> {
     
     @FXML
     private void handleSaveBtn(ActionEvent event) throws Exception {
+        model.setSuppliers(tempList);
         model.writeSuppliers();
         for(Supplier s : tempList){
             model.writeOrderCSV(s);
@@ -147,6 +156,7 @@ public class SessionController extends Controller<Session> {
     
     @FXML
     private void handleSaveExitBtn(ActionEvent event) throws Exception {
+        model.setSuppliers(tempList);
         model.writeSuppliers();
         for (Supplier s : tempList) {
             model.writeOrderCSV(s);

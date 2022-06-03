@@ -290,6 +290,10 @@ public class Session {
         return this.salesReportDate;
     }
     
+    public void setSuppliers(ObservableList<Supplier> newSuppliers){
+        this.suppliers.setSuppliers(newSuppliers);
+    }
+    
     public void writeOrderCSV(Supplier s) throws Exception{
         String name = s.getName();
         if(name.contains("/") || name.contains("\\")){

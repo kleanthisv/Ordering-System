@@ -20,7 +20,6 @@ public class AddSupplierController extends Controller<Session> {
     @FXML
     private void initialize() {
         stage.getIcons().add(new Image(AddProductController.class.getResourceAsStream("/view/icon.png")));
-        
     }
     
     @FXML
@@ -29,7 +28,6 @@ public class AddSupplierController extends Controller<Session> {
 
         if (model.getSuppliers().getSupplier(supplierName) == null && !supplierName.isEmpty()) {
             model.getSuppliers().add(new Supplier(supplierName,false));
-            System.out.println("Supplier " + supplierName + " added to supplier list.");
         }
         stage.close();
     }

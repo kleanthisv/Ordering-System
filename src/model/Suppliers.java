@@ -43,4 +43,8 @@ public class Suppliers {
         this.add(supplier);
     }
     
+    void setSuppliers(ObservableList<Supplier> newSuppliers){
+        this.suppliers = newSuppliers;
+    }
+    
 }
